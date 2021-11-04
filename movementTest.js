@@ -3,6 +3,9 @@ posy = 0;
 posz = 0;
 
 deltaMovement = 0.01
+boundaryx = 1;
+boundaryy = 1;
+smoothing = 50
 
 w_pressed = false;
 a_pressed = false;
@@ -90,7 +93,7 @@ window.onload = function init()
   const far = 5;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   camera.position.z = 2;
-  camera.rotation.x = 45/180*Math.PI;
+  camera.rotation.x = 20/360*Math.PI;
 
   const scene = new THREE.Scene();
 
@@ -120,8 +123,6 @@ window.onload = function init()
 
   const cubes = [
     makeInstance(geometry, 0x44aa88,  0),
-    makeInstance(geometry, 0x8844aa, -2),
-    makeInstance(geometry, 0xaa8844,  2),
   ];
 
   document.addEventListener("keydown", onDocumentKeyDown, false);
@@ -132,12 +133,42 @@ window.onload = function init()
 
   function render(time) {
     time *= 0.001;  // convert time to seconds
-
+   
     calcPosition();
-
+   
     cubes.forEach((cube) => {
+      
+      //camera 이동 
+      if( cube.position.x - camera.position.x > boundaryx)
+      {
+        camera.position.x=camera.position.x+deltaMovement;
+      }
+      else if(cube.position.x - camera.position.x <-boundaryx)
+      {
+        camera.position.x=camera.position.x-deltaMovement;
+      }
+      else if(camera.position.x != cube.position.x)
+      {
+        camera.position.x=camera.position.x+(cube.position.x-camera.position.x)/smoothing;
+      }
+      
+      
+      if( cube.position.y - camera.position.y > boundaryx)
+      {
+        camera.position.y=camera.position.y+deltaMovement;
+      }
+      else if(cube.position.y - camera.position.y <-boundaryx)
+      {
+        camera.position.y=camera.position.y-deltaMovement;
+      }
+      else if(camera.position.y != cube.position.y)
+      {
+        camera.position.y=camera.position.y+(cube.position.y-camera.position.y)/smoothing;
+      }
+      //camera 이동 
       cube.position.x = posx;
       cube.position.y = posy;
+     
     });
 
     renderer.render(scene, camera);
