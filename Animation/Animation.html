@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!--favicon -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+    
+  <style>
+      body{
+          margin: 0;
+      }  
+  </style>
+
+</head>
+
+<body>
+    <script type="module">
+        import { Game } from './Game.js';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const game = new Game(); 
+            window.game = game;
+        });
+    </script>
+</body>
+
+</html>
