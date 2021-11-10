@@ -9,8 +9,7 @@ function UIInit(renderer)
    // AssetLoader.add.image('sprites/asset-active.png');
    // AssetLoader.add.spriteSheet('sprites/sheet.png', 'sprites/sheet.json');
    // AssetLoader.add.bitmapText('fonts/bitmap-font.png', 'fonts/bitmap-font.json');
-
-    // Set a progress listener, can be used to create progress bars
+  // Set a progress listener, can be used to create progress bars
     AssetLoader.progressListener = function(progress) {
         console.info('Progress: ' + (progress * 100) + '%');
     }; //progress바 표기
