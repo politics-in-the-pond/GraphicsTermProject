@@ -4,8 +4,6 @@ import { DRACOLoader } from '../libs/three128/DRACOLoader.js';
 import { RGBELoader } from '../libs/three128/RGBELoader.js';
 import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
-import { UI } from '../UI.js'
-
 
 class Game{
 	constructor(){
@@ -41,7 +39,6 @@ class Game{
         this.renderer.outputEncoding = THREE.sRGBEncoding;
 		container.appendChild( this.renderer.domElement );
 
-        this.ui = new UI(this.renderer);
         this.setEnvironment();
         
         // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
@@ -165,9 +162,7 @@ class Game{
 
 	render() {
 		const dt = this.clock.getDelta();
-
         if(this.mixer !== undefined) this.mixer.update(dt);
-        this.ui.instance.render(this.renderer);
         this.renderer.render( this.scene, this.camera );
     }
 }
