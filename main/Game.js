@@ -7,9 +7,56 @@ import { LoadingBar } from '../libs/LoadingBar.js';
 import { Movement } from '../Movement.js';
 
 class Game{
+    pressed_array = [true, true, true, true];
+
 	constructor(){
+        
+        function whenKeyDown(){
+            var keyCode = event.which;
+            console.log("pressed");
+                // up w
+            if (keyCode == 87) {
+                this.pressed_array[0] = true;
+            }
+                // down s
+            if (keyCode == 83) {
+                this.pressed_array[1] = true;
+            }
+                // left a
+            if (keyCode == 65) {
+                this.pressed_array[2] = true;
+            }
+                // right d
+            if (keyCode == 68) {
+                this.pressed_array[3] = true;
+            }
+        }
+    
+        function whenKeyUp(){
+            var keyCode = event.which;
+            console.log("pressed")
+                // up w
+            if (keyCode == 87) {
+                this.pressed_array[0] = true;
+            }
+                // down s
+            if (keyCode == 83) {
+                this.pressed_array[1] = true;
+            }
+                // left a
+            if (keyCode == 65) {
+                this.pressed_array[2] = true;
+            }
+                // right d
+            if (keyCode == 68) {
+                this.pressed_array[3] = true;
+            }
+        }
+
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
+
+        this.movement = new Movement();
         
 		this.clock = new THREE.Clock();
         // loadingBar를 만듭니다.
@@ -23,8 +70,7 @@ class Game{
         
 		let col = 0x605550;
 		this.scene = new THREE.Scene();
-		this.scene.background = new THREE.Color( col );
-		
+		this.scene.background = new THREE.Color( col );	
         
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
 		this.scene.add(ambient);
@@ -50,7 +96,12 @@ class Game{
         this.loadEve();
 		
 		window.addEventListener('resize', this.resize.bind(this) );
-        
+
+        document.addEventListener("keydown", onDocumentKeyDown, false);
+        function onDocumentKeyDown(event) {whenKeyDown();};
+
+        document.addEventListener("keyup", onDocumentKeyUp, false);
+        function onDocumentKeyUp(event) {whenKeyUp();};
 	}
 	
     resize(){
@@ -95,6 +146,7 @@ class Game{
             'eve.glb',
          gltf => {
             this.eve = gltf.scene;
+            this.movement.setActor(this.eve)
             this.scene.add(gltf.scene);
             this.mixer = new THREE.AnimationMixer(gltf.scene);
 
@@ -163,6 +215,7 @@ class Game{
 
 	render() {
 		const dt = this.clock.getDelta();
+        if(this.pressed_array !== undefined) this.movement.moveActor(this.pressed_array);
         if(this.mixer !== undefined) this.mixer.update(dt);
         this.renderer.render( this.scene, this.camera );
     }

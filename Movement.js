@@ -1,64 +1,44 @@
 class Movement{
+    actor;
+    posx;
+    posy;
+    posz;
+    deltaMovement;
 
     constructor(){
-
+        this.deltaMovement = 0.001;
+        this.posx = 0;
+        this.posy = 0;
+        this.posz = 0;
     }
     
-    w_pressed = false;
-    a_pressed = false;
-    s_pressed = false;
-    d_pressed = false;
-
-    whenKeyDown(){
-        var keyCode = event.which;
-        console.log("pressed")
-        // up
-        if (keyCode == 87) {
-            w_pressed = true
-        }
-            // down
-        if (keyCode == 83) {
-        s_pressed = true
-        }
-            // left
-        if (keyCode == 65) {
-        a_pressed = true
-        }
-            // right
-        if (keyCode == 68) {
-        d_pressed = true
-        }
-            // space
-        if (keyCode == 32) {
-            posx = 0.0;
-            posy = 0.0;
-        }
+    setActor(actor){
+        this.actor = actor;
     }
 
-    whenKeyUp(){
-        var keyCode = event.which;
-        console.log("pressed")
-        // up
-        if (keyCode == 87) {
-            w_pressed = false
+    calcPosition(pressed_array){
+        //console.log(pressed_array)
+        if(pressed_array[0]){
+            this.posy += this.deltaMovement;
         }
-            // down
-        if (keyCode == 83) {
-        s_pressed = false
+      
+        if(pressed_array[1]){
+            this.posx -= this.deltaMovement;
         }
-            // left
-        if (keyCode == 65) {
-        a_pressed = false
+      
+        if(pressed_array[2]){
+            //this.posy -= this.deltaMovement;
         }
-            // right
-        if (keyCode == 68) {
-        d_pressed = false
+      
+        if(pressed_array[3]){
+            //this.posx += this.deltaMovement;
         }
-            // space
-        if (keyCode == 32) {
-            posx = 0.0;
-            posy = 0.0;
-        }
+      }
+
+    moveActor(pressed_array){
+        this.calcPosition(pressed_array);
+        this.actor.position.set(this.posx, this.posy, this.posz);
+        console.log(pressed_array[0])
     }
 }
 
