@@ -5,52 +5,53 @@ import { RGBELoader } from '../libs/three128/RGBELoader.js';
 import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
 import { Movement } from '../Movement.js';
-
+var pressed_array = [false, false, false, false]
 class Game{
-    pressed_array = [true, true, true, true];
 
 	constructor(){
-        
-        function whenKeyDown(){
+
+        function whenKeyDown(pressed_array){
             var keyCode = event.which;
-            console.log("pressed");
                 // up w
             if (keyCode == 87) {
-                this.pressed_array[0] = true;
+                pressed_array[0] = true;
             }
                 // down s
             if (keyCode == 83) {
-                this.pressed_array[1] = true;
+                pressed_array[1] = true;
             }
                 // left a
             if (keyCode == 65) {
-                this.pressed_array[2] = true;
+                pressed_array[2] = true;
             }
                 // right d
             if (keyCode == 68) {
-                this.pressed_array[3] = true;
+                pressed_array[3] = true;
             }
+
+            return pressed_array;
         }
     
-        function whenKeyUp(){
+        function whenKeyUp(pressed_array){
             var keyCode = event.which;
-            console.log("pressed")
                 // up w
             if (keyCode == 87) {
-                this.pressed_array[0] = true;
+                pressed_array[0] = false;
             }
                 // down s
             if (keyCode == 83) {
-                this.pressed_array[1] = true;
+                pressed_array[1] = false;
             }
                 // left a
             if (keyCode == 65) {
-                this.pressed_array[2] = true;
+                pressed_array[2] = false;
             }
                 // right d
             if (keyCode == 68) {
-                this.pressed_array[3] = true;
+                pressed_array[3] = false;
             }
+
+            return pressed_array;
         }
 
 		const container = document.createElement( 'div' );
@@ -98,10 +99,10 @@ class Game{
 		window.addEventListener('resize', this.resize.bind(this) );
 
         document.addEventListener("keydown", onDocumentKeyDown, false);
-        function onDocumentKeyDown(event) {whenKeyDown();};
+        function onDocumentKeyDown(event) {pressed_array = whenKeyDown(pressed_array);};
 
         document.addEventListener("keyup", onDocumentKeyUp, false);
-        function onDocumentKeyUp(event) {whenKeyUp();};
+        function onDocumentKeyUp(event) {pressed_array = whenKeyUp(pressed_array);};
 	}
 	
     resize(){
@@ -215,7 +216,7 @@ class Game{
 
 	render() {
 		const dt = this.clock.getDelta();
-        if(this.pressed_array !== undefined) this.movement.moveActor(this.pressed_array);
+        if(pressed_array !== undefined) this.movement.moveActor(pressed_array);
         if(this.mixer !== undefined) this.mixer.update(dt);
         this.renderer.render( this.scene, this.camera );
     }

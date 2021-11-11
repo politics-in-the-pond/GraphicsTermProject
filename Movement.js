@@ -6,7 +6,7 @@ class Movement{
     deltaMovement;
 
     constructor(){
-        this.deltaMovement = 0.001;
+        this.deltaMovement = 0.005;
         this.posx = 0;
         this.posy = 0;
         this.posz = 0;
@@ -19,26 +19,26 @@ class Movement{
     calcPosition(pressed_array){
         //console.log(pressed_array)
         if(pressed_array[0]){
-            this.posy += this.deltaMovement;
+            this.posy -= this.deltaMovement;
         }
       
         if(pressed_array[1]){
-            this.posx -= this.deltaMovement;
+            this.posy += this.deltaMovement;
         }
       
         if(pressed_array[2]){
-            //this.posy -= this.deltaMovement;
+            this.posx -= this.deltaMovement;
         }
       
         if(pressed_array[3]){
-            //this.posx += this.deltaMovement;
+            this.posx += this.deltaMovement;
         }
       }
 
     moveActor(pressed_array){
         this.calcPosition(pressed_array);
-        this.actor.position.set(this.posx, this.posy, this.posz);
-        console.log(pressed_array[0])
+        this.actor.position.set(this.posx, this.posz, this.posy);
+        //console.log(pressed_array[0])
     }
 }
 
