@@ -13,27 +13,7 @@
       body{
           margin: 0;
       }  
-      #GameStartBtn{  
-        float: left;
-        position: absolute;
-        left: 50%;
-        top: 45%;
-        margin:auto;
-    }
-    #GameSettingBtn{  
-        float: left;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin:auto;
-    }
-    #GameCreatorsBtn{  
-        float: left;
-        position: absolute;
-        left: 50%;
-        top: 55%;
-        margin:auto;
-    }
+     
     #GameMenuBtn{  
         float: right;
         position: absolute;
@@ -43,7 +23,7 @@
     }
     #TitleMenu{  
         width: 100%; 
-        height: 0vh; 
+        height: 100vh; 
         display: -webkit-box; 
         display: -moz-box;
         display: -ms-flexbox; 
@@ -61,7 +41,8 @@
     }
     #GameMenu{  
         width: 100%; 
-        height: 0vh; 
+        height: 100vh; 
+        position:absolute;
         display: -webkit-box; 
         display: -moz-box;
         display: -ms-flexbox; 
@@ -71,58 +52,55 @@
         -moz-box-align: center;
         -ms-flex-align: center;
         align-items: center; /* 수직 정렬 */
- 
+        text-align: center;
         -webkit-box-pack: center;
         -moz-box-pack: center; 
         -ms-flex-pack: center; 
         justify-content: center; /* 수평 정렬 */
-        color:rgba(0, 0, 0, 1);
     }
-    #MenuResumeBtn{  
-        float: left;
-        position: absolute;
-        left: 50%;
-        top: 45%;
-        margin:auto;
+    .MenuChild{
+        flex:4;
     }
-    #MenuRestartBtn{  
-        float: left;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin:auto;
-    }
-    #MenuSettingBtn{  
-        float: left;
-        position: absolute;
-        left: 50%;
-        top: 55%;
-        margin:auto;
-    }
-    #MenuQuitBtn{  
-        float: left;
-        position: absolute;
-        left: 50%;
-        top: 60%;
-        margin:auto;
+    #MenuBox{
+        height: auto;
+        width: 10%;
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        background-color: bisque;
+        text-align: center;
+        vertical-align:middle;
+    } 
+    .MenuBtn{
+        margin: 10px;
     }
   </style>
   </head>
 
 <body>
     <script type="module" src="../TitleUI.js"></script>
-    <div id="TitleMenu">
-        <button type="button" id="GameStartBtn">게임시작</button>
-        <button type="button" id="GameSettingBtn" >게임설정</button>
-        <button type="button" id="GameCreatorsBtn">제작자들</button>
-    </div>
-        <button type="button" id="GameMenuBtn">게임메뉴</button>
-        <div id="GameMenu">
-            <button type="button" id="MenuResumeBtn" class="Menu"> 계속하기 </button>
-            <button type="button" id="MenuRestartBtn" class="Menu"> 다시하기 </button>
-            <button type="button" id="MenuSettingBtn" class="Menu"> 게임설정 </button>
-            <button type="button" id="MenuQuitBtn" class="Menu"> 종료하기 </button>
+        <div id="TitleMenu">
+            <div class="MenuChild"></div>
+            <div class="MenuChild" id="MenuBox">
+                <button type="button" id="GameStartBtn"class="MenuBtn">게임시작</button>
+                <button type="button" id="GameSettingBtn" class="MenuBtn">게임설정</button>
+                <button type="button" id="GameCreatorsBtn"class="MenuBtn">제작자들</button>
+            </div>
+            <div class="MenuChild"></div>
         </div>
+        <button type="button" id="GameMenuBtn">게임메뉴</button>
+        <div style="position:absolute;width:30%;height:100vh;"></div>
+        <div id="GameMenu">
+            <div class="MenuChild"></div>
+            <div class="MenuChild" id="MenuBox">
+                <button type="button" id="MenuResumeBtn" class="MenuBtn"> 계속하기 </button>
+                <button type="button" id="MenuRestartBtn" class="MenuBtn"> 다시하기 </button>
+                <button type="button" id="MenuSettingBtn" class="MenuBtn"> 게임설정 </button>
+                <button type="button" id="MenuQuitBtn" class="MenuBtn"> 종료하기 </button>
+            </div>
+            <div class="MenuChild"></div>
+        </div>
+        <div style="position:absolute;width:30%;height:100vh;"></div>
 </body>
 
 </html>
