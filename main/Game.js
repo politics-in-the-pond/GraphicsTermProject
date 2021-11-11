@@ -4,6 +4,7 @@ import { DRACOLoader } from '../libs/three128/DRACOLoader.js';
 import { RGBELoader } from '../libs/three128/RGBELoader.js';
 import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
+import { Movement } from '../Movement.js';
 
 class Game{
 	constructor(){
