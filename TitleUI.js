@@ -27,7 +27,7 @@ window.onload=function init(){
     if(!menuEnabled)
     {
       menuEnabled=true;
-      Menu[1].style.display = "block";
+      Menu[1].style.display = "flex";
       button[3].style.display = "none";
     }
   });
