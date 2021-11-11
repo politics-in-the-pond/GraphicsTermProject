@@ -4,10 +4,10 @@ import { DRACOLoader } from '../libs/three128/DRACOLoader.js';
 import { RGBELoader } from '../libs/three128/RGBELoader.js';
 import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
-import { Movement } from '../Movement.js';
+import { Character } from '../Character.js';
 
 var pressed_array = [false, false, false, false];
-var pressed_buffer = [false, false];
+
 
 class Game{
 
@@ -60,7 +60,7 @@ class Game{
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
 
-        this.movement = new Movement();
+      
         
 		this.clock = new THREE.Clock();
         // loadingBar를 만듭니다.
@@ -83,6 +83,8 @@ class Game{
         const light = new THREE.DirectionalLight();
         light.position.set( 0.2, 1, 1 );
 		
+        this.character = new Character(this.loadCharacter());
+
         // antialiasing을 활성화합니다.
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		// 렌더러의 비율을 사용하는 기기화면 비율에 맞추어 조정합니다.
@@ -97,8 +99,6 @@ class Game{
         const controls = new OrbitControls( this.camera, this.renderer.domElement );
         controls.target.set(0, 1, 0);
 		controls.update();
-
-        this.loadEve();
 		
 		window.addEventListener('resize', this.resize.bind(this) );
 
@@ -137,7 +137,7 @@ class Game{
         } );
     }
 
-    loadEve(){
+    loadCharacter(){
     	const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath('../libs/three128/draco/');
@@ -150,24 +150,12 @@ class Game{
         loader.load(
             'eve.glb',
          gltf => {
-            this.eve = gltf.scene;
-            this.movement.setActor(this.eve)
             this.scene.add(gltf.scene);
-            this.mixer = new THREE.AnimationMixer(gltf.scene);
-
-            this.animations = {};
+            this.character.setActor(gltf);
             
-            gltf.animations.forEach(animation => {
-                this.animations[animation.name.toLowerCase()] = 
-                animation;
-            });
-
-            console.log(this.animations);
-
-            this.actionName = '';   // since we have no animatinos at the moment we initialize this to an empty string
-
+           
             // method that will trigger a new animation
-            this.newAnim();
+            //this.newAnim();
 
             this.loadingBar.visible = false;
 
@@ -181,89 +169,14 @@ class Game{
             console.error(err.message);
         }
         );
-	}			
-    
-	newAnim(){
-		const keys = Object.keys(this.animations);
-
-        let index;
-
-        do{
-            index = Math.floor( Math.random() * keys.length);
-        }while(keys[index] == this.actionName);
-
-        this.action = keys[index];
-
-        setTimeout(this.newAnim.bind(this), 3000);
-	}
-
-	set action(name){   // setter method when we called we set the game property action
-		const clip = this.animations[name];
-
-        if(clip!==undefined){
-            const action = this.mixer.clipAction(clip);
-
-            action.reset();
-            
-            if(name == 'shot'){
-                action.setLoop(THREE.LoopOnce);
-            }
-            this.actionName = name;
-            action.play();
-            
-            if(this.curAction){
-                this.curAction.crossFadeTo(action, 0.5);
-            }
-
-            this.curAction = action;
-        }
-	}
-
+	}		
     //애니메이션 판단용 코드.
-    checkBuffer(){
-        pressed_buffer[0] = pressed_buffer[1];
-        if(pressed_array[0] == true){
-            pressed_buffer[1] = true;
-        } else if(pressed_array[1] == true){
-            pressed_buffer[1] = true;
-        } else if(pressed_array[2] == true){
-            pressed_buffer[1] = true;
-        } else if(pressed_array[3] == true){
-            pressed_buffer[1] = true;
-        }else{
-            pressed_buffer[1] = false;
-        }
-
-        if(pressed_array[0] == true && pressed_array[1] == true && pressed_array[2] == false && pressed_array[3] == false){
-            pressed_buffer[1] = false;
-        } else if(pressed_array[0] == false && pressed_array[1] == false && pressed_array[2] == true && pressed_array[3] == true){
-            pressed_buffer[1] = false;
-        }  else if(pressed_array[0] == true && pressed_array[1] == true && pressed_array[2] == true && pressed_array[3] == true){
-            pressed_buffer[1] = false;
-        } 
-
-        if(pressed_buffer[0] == false && pressed_buffer[1] == true){ //running으로 변경
-            console.log("now running");
-            return 2;
-        }else if(pressed_buffer[0] == true && pressed_buffer[1] == false){ //idle로 변경
-            console.log("stop running");
-            return 1;
-        }
-
-        return 0;
-    }
+    
 
 	render() {
 		const dt = this.clock.getDelta();
-        var animation_code = this.checkBuffer();
-        if(animation_code != 0){
-            if(animation_code == 1){ //애니메이션 바꾸는 법을 몰라서 남겨놨습니다.
-                //this.action("idle");
-            }else if(animation_code == 2){
-                //this.action("run");
-            }
-        }
-        if(pressed_array !== undefined) this.movement.moveActor(pressed_array);
+        this.character.update(pressed_array);
+        if(pressed_array !== undefined) this.character.move(pressed_array);
         if(this.mixer !== undefined) this.mixer.update(dt);
         this.renderer.render( this.scene, this.camera );
     }
