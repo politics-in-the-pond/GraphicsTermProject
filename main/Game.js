@@ -5,7 +5,10 @@ import { RGBELoader } from '../libs/three128/RGBELoader.js';
 import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
 import { Movement } from '../Movement.js';
-var pressed_array = [false, false, false, false]
+
+var pressed_array = [false, false, false, false];
+var pressed_buffer = [false, false];
+
 class Game{
 
 	constructor(){
@@ -214,8 +217,38 @@ class Game{
         }
 	}
 
+    checkBuffer(){
+        pressed_buffer[0] = pressed_buffer[1];
+        if(pressed_array[0] == true){
+            pressed_buffer[1] = true;
+        } else if(pressed_array[1] == true){
+            pressed_buffer[1] = true;
+        } else if(pressed_array[2] == true){
+            pressed_buffer[1] = true;
+        } else if(pressed_array[3] == true){
+            pressed_buffer[1] = true;
+        }else{
+            pressed_buffer[1] = false;
+        }
+
+        if(pressed_array[0] == true && pressed_array[1] == true && pressed_array[2] == false && pressed_array[3] == false){
+            pressed_buffer[1] = false;
+        } else if(pressed_array[0] == false && pressed_array[1] == false && pressed_array[2] == true && pressed_array[3] == true){
+            pressed_buffer[1] = false;
+        }  else if(pressed_array[0] == true && pressed_array[1] == true && pressed_array[2] == true && pressed_array[3] == true){
+            pressed_buffer[1] = false;
+        } 
+
+        if(pressed_buffer[0] == false && pressed_buffer[1] == true){ //running으로 변경
+            console.log("now running");
+        }else if(pressed_buffer[0] == true && pressed_buffer[1] == false){ //idle로 변경
+            console.log("stop running");
+        }
+    }
+
 	render() {
 		const dt = this.clock.getDelta();
+        this.checkBuffer();
         if(pressed_array !== undefined) this.movement.moveActor(pressed_array);
         if(this.mixer !== undefined) this.mixer.update(dt);
         this.renderer.render( this.scene, this.camera );
