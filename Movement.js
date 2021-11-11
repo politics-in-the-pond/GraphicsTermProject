@@ -6,7 +6,7 @@ class Movement{
     deltaMovement;
 
     constructor(){
-        this.deltaMovement = 0.005;
+        this.deltaMovement = 0.01;
         this.posx = 0;
         this.posy = 0;
         this.posz = 0;
@@ -39,6 +39,10 @@ class Movement{
         this.calcPosition(pressed_array);
         this.actor.position.set(this.posx, this.posz, this.posy);
         //console.log(pressed_array[0])
+    }
+
+    setDeltaMovement(delta){
+        this.deltaMovement = delta;
     }
 }
 

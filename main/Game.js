@@ -71,6 +71,7 @@ class Game{
         
 		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 50 );
 		this.camera.position.set( 1, 1.7, 2.8 );
+        //this.camera.rotation.x = 180 * Math.PI / 180;
         
 		let col = 0x605550;
 		this.scene = new THREE.Scene();
@@ -161,8 +162,9 @@ class Game{
                 animation;
             });
 
-            this.actionName = '';   // since we have no animatinos at the moment we initialize this to an empty string
+            console.log(this.animations);
 
+            this.actionName = '';   // since we have no animatinos at the moment we initialize this to an empty string
 
             // method that will trigger a new animation
             this.newAnim();
@@ -217,6 +219,7 @@ class Game{
         }
 	}
 
+    //애니메이션 판단용 코드.
     checkBuffer(){
         pressed_buffer[0] = pressed_buffer[1];
         if(pressed_array[0] == true){
@@ -241,14 +244,25 @@ class Game{
 
         if(pressed_buffer[0] == false && pressed_buffer[1] == true){ //running으로 변경
             console.log("now running");
+            return 2;
         }else if(pressed_buffer[0] == true && pressed_buffer[1] == false){ //idle로 변경
             console.log("stop running");
+            return 1;
         }
+
+        return 0;
     }
 
 	render() {
 		const dt = this.clock.getDelta();
-        this.checkBuffer();
+        var animation_code = this.checkBuffer();
+        if(animation_code != 0){
+            if(animation_code == 1){ //애니메이션 바꾸는 법을 몰라서 남겨놨습니다.
+                //this.action("idle");
+            }else if(animation_code == 2){
+                //this.action("run");
+            }
+        }
         if(pressed_array !== undefined) this.movement.moveActor(pressed_array);
         if(this.mixer !== undefined) this.mixer.update(dt);
         this.renderer.render( this.scene, this.camera );
