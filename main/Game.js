@@ -158,7 +158,6 @@ class Game{
             //this.newAnim();
 
             this.loadingBar.visible = false;
-
             this.renderer.setAnimationLoop(this.render.bind(this));
             this.plane = gltf.scene;            
         },

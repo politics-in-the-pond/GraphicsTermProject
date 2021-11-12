@@ -74,11 +74,50 @@
     .MenuBtn{
         margin: 10px;
     }
+
+    #SettingMenu{  
+        width: 100%; 
+        height: 100vh; 
+        position:absolute;
+        display: -webkit-box; 
+        display: -moz-box;
+        display: -ms-flexbox; 
+        display: flex; 
+        display: none;
+        -webkit-box-align: center; 
+        -moz-box-align: center;
+        -ms-flex-align: center;
+        align-items: center; /* 수직 정렬 */
+        text-align: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center; 
+        -ms-flex-pack: center; 
+        justify-content: center; /* 수평 정렬 */
+    }
+    .SettingChild{
+        flex:3;
+    }
+    #SettingBox{
+        height: auto;
+        width: 30%;
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        background-color: bisque;
+        text-align: center;
+        vertical-align:middle;
+    } 
+    .SettingBottomDiv{
+        display: flex; 
+    }
+    .SettingBtn{
+        margin: 10px;
+    }
   </style>
   </head>
 
 <body>
-    <script type="module" src="../TitleUI.js"></script>
+    <script type="module" src="../UI.js"></script>
         <div id="TitleMenu">
             <div class="MenuChild"></div>
             <div class="MenuChild" id="MenuBox">
@@ -101,6 +140,23 @@
             <div class="MenuChild"></div>
         </div>
         <div style="position:absolute;width:30%;height:100vh;"></div>
+        <div style="position:absolute;width:30%;height:100vh;"></div>
+        <div id="SettingMenu">
+            <div class="SettingChild"></div>
+            <div class="SettingChild" id="SettingBox">
+                <div> 게임설정 </div>
+                <button type="button" id="SettingRestartBtn" class="SettingBtn"> 세팅 </button>
+                <button type="button" id="SettingSettingBtn" class="SettingBtn"> 세팅 </button>
+                <div id="SettingBottomDiv"> 
+                    <button type="button" id="SettingResetBtn" class="SettingBtn"> 기본값으로 </button>
+                    <button type="button" id="SettingSaveCloseBtn" class="SettingBtn"> 저장 후 닫기 </button>
+                </div>
+            </div>
+            <div class="SettingChild"></div>
+        </div>
+        <div style="position:absolute;width:30%;height:100vh;"></div>
+
+
 </body>
 
 </html>

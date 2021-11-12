@@ -19,7 +19,7 @@ class Character{
 	AnimationUpdate(index){
 		const keys = Object.keys(this.animations);
         this.action = keys[index];
-        setTimeout(this.AnimationUpdate.bind(this), 3000);
+        //setTimeout(this.AnimationUpdate.bind(this), 3000);
 	}
     
 	set action(name){   // setter method when we called we set the game property action
@@ -34,6 +34,7 @@ class Character{
                 action.setLoop(THREE.LoopOnce);
             }
             this.actionName = name;
+            console.log(this.actionName);
             action.play();
             
             if(this.curAction){
@@ -41,6 +42,7 @@ class Character{
             }
 
             this.curAction = action;
+
         }
 	}
     setActor(actor)
