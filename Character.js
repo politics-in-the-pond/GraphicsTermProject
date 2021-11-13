@@ -119,7 +119,7 @@ class Character{
             this.setRotationY(angle);
         }
         this.actor.position.set(this.posx, this.posy, this.posz);
-        console.log(this.posz)
+        document.getElementById("Distance").innerText = Math.floor(this.posz)*10+" M";
     }
 
     getRotationFromKey(pressed_array){
