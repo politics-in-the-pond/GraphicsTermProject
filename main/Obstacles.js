@@ -23,13 +23,13 @@ class Obstacles {
         loader.load(
 
             // gltf resource
-            'land_mine.glb',
+            'land_mine_resize.glb',
 
             // resource가 loading 될때 불린다.
             gltf => {
                 this.thorn = gltf.scene.children[0];
                 this.thorn.name = 'landMine';
-                this.thorn.position.set(0,0,2);
+                this.thorn.position.set(0,2,1);
                 this.thorn.visible = true;
                 this.scene.add(this.thorn);
                 
