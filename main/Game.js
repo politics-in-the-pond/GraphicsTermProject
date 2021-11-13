@@ -6,6 +6,7 @@ import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
 import { Character } from '../Character.js';
 import { Obstacles } from './Obstacles.js';
+import { Camera } from '../Camera.js';
 var pressed_array = [false, false, false, false];
 
 
@@ -68,7 +69,7 @@ class Game{
         this.loadingBar.visible = false;
 
 		this.assetsPath = '../assets/';
-        
+        this.movableCam = new Camera();
         this.movableCam.setCamera(new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.001, 1000 ));
         
 		let col = 0x605550;
