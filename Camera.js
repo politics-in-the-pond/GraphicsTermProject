@@ -39,7 +39,7 @@ class Camera{
       {
         this.camera.position.y=this.beforePositiony+deltaMovement;
       }
-      else if(pos[1] - this.beforePositiony < -boundaryy)
+      else if(pos[1] - this.beforePositiony < -boundaryx)
       {
         this.camera.position.y=this.beforePositiony-deltaMovement;
       }
