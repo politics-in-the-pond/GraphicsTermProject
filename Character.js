@@ -43,6 +43,8 @@ class Character{
         }
 	}
 
+
+
     setActor(actor)
     {
         this.actor=actor.scene;

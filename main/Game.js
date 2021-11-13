@@ -93,6 +93,8 @@ class Game{
         this.renderer.outputEncoding = THREE.sRGBEncoding;
 		container.appendChild( this.renderer.domElement );
 
+
+
         this.setEnvironment();
         
          // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
@@ -108,6 +110,40 @@ class Game{
         function onDocumentKeyUp(event) {pressed_array = whenKeyUp(pressed_array);};
 	}
 	
+    loadCharacter(){
+        const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
+         const dracoLoader = new DRACOLoader();
+         dracoLoader.setDecoderPath('../libs/three128/draco/');
+         loader.setDRACOLoader(dracoLoader);
+ 
+         this.loadingBar.visible = true;
+ 
+         // this.scene = gltf.scene;
+ 
+         // gltf 파일을 받아오는 부분입니다.
+         loader.load(
+             'eve.glb',
+          gltf => {
+ 
+             // eve에 gltf.scene을 넣어줌으로 eve의 모든 animation과 textur를 넣어줍니다.
+             this.eve = gltf.scene;
+             this.scene.add(gltf.scene);
+             this.character.setActor(gltf);
+             // method that will trigger a new animation
+             //this.newAnim();
+             this.loadingBar.visible = false;
+             this.renderer.setAnimationLoop(this.render.bind(this));
+             this.plane = gltf.scene;            
+         },
+         xhr => { 
+             this.loadingBar.progress = (xhr.loaded/xhr.total);
+         },
+         err => {
+             console.error(err.message);
+         }
+         );
+    }      
+
     resize(){
         this.camera.aspect = window.innerWidth / window.innerHeight;    // 종횡비 변경
     	this.camera.updateProjectionMatrix();   // camera matrix를 업데이트하여 카메라의 위치 변경을 반영합니다.
