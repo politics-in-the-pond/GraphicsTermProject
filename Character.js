@@ -156,7 +156,7 @@ class Character{
     }
 
     addDeltaMovementy(delta){
-        //this.posz += delta;
+        this.posz += delta;
     }
 
     setDeltaMovement(delta){
