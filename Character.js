@@ -64,11 +64,11 @@ class Character{
     calcPosition(pressed_array){
         //console.log(pressed_array)
         if(pressed_array[0]){
-            this.posy -= this.deltaMovement;
+            this.posy += this.deltaMovement;
         }
       
         if(pressed_array[1]){
-            this.posy += this.deltaMovement;
+            this.posy -= this.deltaMovement;
         }
       
         if(pressed_array[2]){

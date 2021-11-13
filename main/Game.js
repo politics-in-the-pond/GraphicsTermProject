@@ -72,9 +72,7 @@ class Game{
 
         this.movableCam = new Camera();
         
-		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 50 );
-		this.camera.position.set( 0, 1, 3 );
-        this.camera.rotation.x = 180 * Math.PI / 180;
+        this.movableCam.setCamera(new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.001, 1000 ));
         
 		let col = 0x605550;
 		this.scene = new THREE.Scene();
@@ -99,9 +97,8 @@ class Game{
         this.setEnvironment();
         
          // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
-        const controls = new OrbitControls( this.camera, this.renderer.domElement );
-        controls.target.set(0, 1, 0);
-        controls.update();
+         
+
 		
 		window.addEventListener('resize', this.resize.bind(this) );
 
@@ -178,9 +175,10 @@ class Game{
         this.character.update(pressed_array);
         if(pressed_array !== undefined) this.character.move(pressed_array);
         var actorPosition = this.character.getActorPosition();
-        //this.controls.target.set(0, actorPosition[1], 0);
+        this.movableCam.setCameraPosition(actorPosition);
+        console.log(this.movableCam.camera.position)
         if(this.character.mixer !== undefined) this.character.mixer.update(dt);
-        this.renderer.render( this.scene, this.camera );
+        this.renderer.render( this.scene, this.movableCam.getCamera() );
     }
 }
 
