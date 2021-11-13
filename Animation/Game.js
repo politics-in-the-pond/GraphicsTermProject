@@ -89,9 +89,12 @@ class Game{
 
         // this.scene = gltf.scene;
 
+        // gltf 파일을 받아오는 부분입니다.
         loader.load(
             'eve.glb',
          gltf => {
+
+            // eve에 gltf.scene을 넣어줌으로 eve의 모든 animation과 textur를 넣어줍니다.
             this.eve = gltf.scene;
             this.scene.add(gltf.scene);
             this.mixer = new THREE.AnimationMixer(gltf.scene);
@@ -168,4 +171,6 @@ class Game{
     }
 }
 
+
+// Reference : The Beginners Guid to 3D Web Game Development
 export { Game };
