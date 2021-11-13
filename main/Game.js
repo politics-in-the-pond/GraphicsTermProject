@@ -5,7 +5,7 @@ import { RGBELoader } from '../libs/three128/RGBELoader.js';
 import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
 import { Character } from '../Character.js';
-import { Obstacles } from './Obstacles.js';
+// import { Obstacles } from './Obstacles.js';
 import { Camera } from '../Camera.js';
 var pressed_array = [false, false, false, false];
 
@@ -92,6 +92,8 @@ class Game{
         this.renderer.outputEncoding = THREE.sRGBEncoding;
 		container.appendChild( this.renderer.domElement );
 
+
+
         this.setEnvironment();
         
          // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
@@ -137,41 +139,6 @@ class Game{
 
 
 
-    loadCharacter(){
-    	const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
-        const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath('../libs/three128/draco/');
-        loader.setDRACOLoader(dracoLoader);
-
-        this.loadingBar.visible = true;
-
-        // this.scene = gltf.scene;
-
-        // gltf 파일을 받아오는 부분입니다.
-        loader.load(
-            'eve.glb',
-         gltf => {
-
-            // eve에 gltf.scene을 넣어줌으로 eve의 모든 animation과 textur를 넣어줍니다.
-            this.eve = gltf.scene;
-            this.scene.add(gltf.scene);
-            this.character.setActor(gltf);
-            // method that will trigger a new animation
-            //this.newAnim();
-            this.loadingBar.visible = false;
-            this.renderer.setAnimationLoop(this.render.bind(this));
-            this.plane = gltf.scene;            
-        },
-        xhr => { 
-            this.loadingBar.progress = (xhr.loaded/xhr.total);
-        },
-        err => {
-            console.error(err.message);
-        }
-        );
-	}		
-    //애니메이션 판단용 코드.
-    
 
 	render() {
 		const dt = this.clock.getDelta();   // get elapsed time

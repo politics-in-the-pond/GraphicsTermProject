@@ -8,9 +8,7 @@ class Obstacles {
     constructor(game){
         this.game = game;
         this.scene = game.scene;
-        this.loadThornPillar();
-        this.position = Vector3(0,0,0);
-        this.isFirst;
+		this.tmpPos = new Vector3();
         this.load();
         
     }
