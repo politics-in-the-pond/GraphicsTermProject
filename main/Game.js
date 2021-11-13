@@ -70,7 +70,7 @@ class Game{
 
 		this.assetsPath = '../assets/';
         this.movableCam = new Camera();
-        this.movableCam.setCamera(new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.001, 1000 ));
+        this.movableCam.setCamera(new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.001, 100000 ));
         
 		let col = 0x605550;
 		this.scene = new THREE.Scene();
@@ -78,6 +78,7 @@ class Game{
         
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
 		this.scene.add(ambient);
+        this.scene.fog = new THREE.Fog(0xffffff, 2.5, 5);
 
         const light = new THREE.DirectionalLight();
         light.position.set( 0.2, 1, 1 );

@@ -64,19 +64,19 @@ class Character{
     calcPosition(pressed_array){
         //console.log(pressed_array)
         if(pressed_array[0]){
-            this.posy += this.deltaMovement;
+            this.posz += this.deltaMovement;
         }
       
         if(pressed_array[1]){
-            this.posy -= this.deltaMovement;
+            this.posz -= this.deltaMovement;
         }
       
         if(pressed_array[2]){
-            this.posx -= this.deltaMovement;
+            this.posx += this.deltaMovement;
         }
       
         if(pressed_array[3]){
-            this.posx += this.deltaMovement;
+            this.posx -= this.deltaMovement;
         }
       }
       update(pressed_array){
@@ -119,31 +119,31 @@ class Character{
             this.setRotationY(angle);
         }
         this.actor.position.set(this.posx, this.posy, this.posz);
-        console.log(this.posy)
+        console.log(this.posz)
     }
 
     getRotationFromKey(pressed_array){
         var angle = 180;
         if(pressed_array[0] == true){
-            angle = 180;
-        } else if(pressed_array[1] == true){
             angle = 0;
+        } else if(pressed_array[1] == true){
+            angle = 180;
         } else if(pressed_array[2] == true){
-            angle = 270;
-        } else if(pressed_array[3] == true){
             angle = 90;
+        } else if(pressed_array[3] == true){
+            angle = 270;
         }else{
             angle = -1;
         }
 
         if(pressed_array[0] == true && pressed_array[1] == false && pressed_array[2] == true && pressed_array[3] == false){
-            angle = 225;
-        } else if(pressed_array[0] == true && pressed_array[1] == false && pressed_array[2] == false && pressed_array[3] == true){
-            angle = 135;
-        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == true && pressed_array[3] == false){
-            angle = 315;
-        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == false && pressed_array[3] == true){
             angle = 45;
+        } else if(pressed_array[0] == true && pressed_array[1] == false && pressed_array[2] == false && pressed_array[3] == true){
+            angle = 315;
+        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == true && pressed_array[3] == false){
+            angle = 135;
+        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == false && pressed_array[3] == true){
+            angle = 225;
         } else{
 
         }
@@ -156,7 +156,7 @@ class Character{
     }
 
     addDeltaMovementy(delta){
-        this.posy += delta;
+        //this.posz += delta;
     }
 
     setDeltaMovement(delta){

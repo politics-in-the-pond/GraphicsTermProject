@@ -4,15 +4,15 @@ class Camera{
     camera;
     biasy = 1;
     beforePositionx=0;
-    beforePositiony=0;
+    beforePositionz=0;
 
     setCamera(camera)
     {
         this.camera = camera;
-        camera.position.z = 3;
-        camera.rotation.x = -10/360*Math.PI;
-        camera.rotation.y = 0/360*Math.PI;
-        camera.rotation.z = 0/360*Math.PI;
+        camera.position.y = 2;
+        camera.rotation.x = 30 * Math.PI / 180;
+        camera.rotation.y = 180 * Math.PI / 180;
+        camera.rotation.z = 0 * Math.PI / 180;
     }
 
     setCameraPosition(pos){
@@ -22,36 +22,36 @@ class Camera{
         var deltaMovement = 0.01;
 
     //camera 이동 
-      if( pos[0] - this.camera.position.x > boundaryx)
+      if( pos[0] - this.beforePositionx > boundaryx)
       {
-        this.camera.position.x=this.camera.position.x+deltaMovement;
+        this.camera.position.x=this.beforePositionx+deltaMovement;
       }
-      else if(pos[0] - this.camera.position.x <-boundaryx)
+      else if(pos[0] - this.beforePositionx <-boundaryx)
       {
-        this.camera.position.x=this.camera.position.x-deltaMovement;
+        this.camera.position.x=this.beforePositionx-deltaMovement;
       }
-      else if(this.camera.position.x != pos[0])
+      else if(this.beforePositionx != pos[0])
       {
-        this.camera.position.x=this.camera.position.x+(pos[0]-this.camera.position.x)/smoothing;
+        this.camera.position.x=this.beforePositionx+(pos[0]-this.beforePositionx)/smoothing;
       }
       
-      if( pos[1] - this.beforePositiony > boundaryy)
+      if( pos[2] - this.beforePositionz > boundaryy)
       {
-        this.camera.position.y=this.beforePositiony+deltaMovement;
+        this.camera.position.z=this.beforePositionz+deltaMovement;
       }
-      else if(pos[1] - this.beforePositiony < -boundaryy)
+      else if(pos[2] - this.beforePositionz < -boundaryx)
       {
-        this.camera.position.y=this.beforePositiony-deltaMovement;
+        this.camera.position.z=this.beforePositionz-deltaMovement;
       }
-      else if(this.beforePositiony != pos[1])
+      else if(this.beforePositionz != pos[2])
       {
-        this.camera.position.y=this.beforePositiony+(pos[1]-this.beforePositiony)/smoothing;
+        this.camera.position.z=this.beforePositionz+(pos[2]-this.beforePositionz)/smoothing;
       }
 
       this.beforePositionx = this.camera.position.x;
-      this.beforePositiony = this.camera.position.y;
+      this.beforePositionz = this.camera.position.z;
       this.camera.position.x += 0;
-      this.camera.position.y += 2;
+      this.camera.position.z -= 3;
       //camera 이동 
     }
 
