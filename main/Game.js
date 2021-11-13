@@ -72,7 +72,7 @@ class Game{
 
         this.movableCam = new Camera();
         
-        this.movableCam.setCamera(new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.001, 1000 ));
+        this.movableCam.setCamera(new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 0.001, 1000 ));
         
 		let col = 0x605550;
 		this.scene = new THREE.Scene();

@@ -11,7 +11,7 @@ class Character{
     constructor(){
         this.deltaMovement = 0.01;
         this.posx = 0;
-        this.posy = 0;
+        this.posy = -1;
         this.posz = 0;
     }
     
@@ -39,9 +39,7 @@ class Character{
             if(this.curAction){
                 this.curAction.crossFadeTo(action, 0.5);
             }
-
             this.curAction = action;
-
         }
 	}
 
@@ -160,7 +158,7 @@ class Character{
     }
 
     getActorPosition(){
-        var position = [this.posx, this.posy, this.posz];
+        var position = [this.posx, this.posy+1, this.posz];
         return position;
     }
 }
