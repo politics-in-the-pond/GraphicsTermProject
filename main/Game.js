@@ -78,12 +78,13 @@ class Game{
         
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
 		this.scene.add(ambient);
+        this.scene.fog = new THREE.Fog(0xffffff, 2.5, 5);
 
         const light = new THREE.DirectionalLight();
         light.position.set( 0.2, 1, 1 );
 		
         this.character = new Character(this.loadCharacter());
-        // this.obstacle = new Obstacles(this);
+        this.obstacle = new Obstacles(this);
         // antialiasing을 활성화합니다.
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		// 렌더러의 비율을 사용하는 기기화면 비율에 맞추어 조정합니다.
