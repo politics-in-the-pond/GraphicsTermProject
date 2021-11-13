@@ -99,9 +99,7 @@ class Game{
         this.setEnvironment();
         
         // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
-        const controls = new OrbitControls( this.camera, this.renderer.domElement );
-        controls.target.set(0, 1, 0);
-		controls.update();
+     
 		
 		window.addEventListener('resize', this.resize.bind(this) );
 
@@ -150,6 +148,7 @@ class Game{
 
         // this.scene = gltf.scene;
 
+        // gltf 파일을 받아오는 부분입니다.
         loader.load(
             'eve.glb',
          gltf => {
@@ -183,4 +182,6 @@ class Game{
     }
 }
 
+
+// Reference : The Beginners Guid to 3D Web Game Development
 export { Game };
