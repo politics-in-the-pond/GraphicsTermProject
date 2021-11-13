@@ -8,7 +8,8 @@ class Obstacles {
     constructor(game){
         this.game = game;
         this.scene = game.scene;
-        this.position = new THREE.Vector3(0,0,0);
+        this.position = new THREE.Vector3(0,90 * Math.PI / 180,0);
+        this.rotaion = new THREE.Vector3(0.1,0.1,0.1);
         this.isFirst;
         this.load();
         
