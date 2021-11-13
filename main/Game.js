@@ -84,7 +84,10 @@ class Game{
         light.position.set( 0.2, 1, 1 );
 		
         this.character = new Character(this.loadCharacter());
-        this.obstacle = new Obstacles(this);
+        this.obstacles = new Obstacles(this);
+        
+        
+
         // antialiasing을 활성화합니다.
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		// 렌더러의 비율을 사용하는 기기화면 비율에 맞추어 조정합니다.
@@ -101,7 +104,7 @@ class Game{
          
 
 		
-		window.addEventListener('resize', this.resize.bind(this) );
+		//window.addEventListener('resize', this.resize.bind(this) );
 
         document.addEventListener("keydown", onDocumentKeyDown, false);
         function onDocumentKeyDown(event) {pressed_array = whenKeyDown(pressed_array);};
@@ -109,7 +112,6 @@ class Game{
         document.addEventListener("keyup", onDocumentKeyUp, false);
         function onDocumentKeyUp(event) {pressed_array = whenKeyUp(pressed_array);};
 	}
-	
     loadCharacter(){
         const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
          const dracoLoader = new DRACOLoader();
