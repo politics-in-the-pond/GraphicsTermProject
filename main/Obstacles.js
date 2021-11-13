@@ -4,7 +4,7 @@ import {GLTFLoader} from "../libs/three128/GLTFLoader.js"
 class Obstacles {
 
 
-    static obstaclePath = '../assets/spike_club/'
+    static obstaclePath = '../assets/'
     constructor(game){
         this.game = game;
         this.scene = game.scene;
@@ -23,13 +23,13 @@ class Obstacles {
         loader.load(
 
             // gltf resource
-            'scene.gltf',
+            'land_mine.glb',
 
             // resource가 loading 될때 불린다.
             gltf => {
                 this.thorn = gltf.scene.children[0];
-                this.thorn.name = 'thron';
-                this.thorn.position.set(2,0,1)
+                this.thorn.name = 'landMine';
+                this.thorn.position.set(0,0,2);
                 this.thorn.visible = true;
                 this.scene.add(this.thorn);
                 
