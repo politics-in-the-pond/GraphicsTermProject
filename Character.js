@@ -1,4 +1,5 @@
 import * as THREE from '../libs/three128/three.module.js';
+
 var pressed_buffer = [false, false];
 class Character{
     actor;
@@ -47,6 +48,7 @@ class Character{
     setActor(actor)
     {
         this.actor=actor.scene;
+        this.setRotationY(180);
         this.mixer = new THREE.AnimationMixer(actor.scene);
         this.animations = {};
     
@@ -122,7 +124,7 @@ class Character{
     }
 
     getRotationFromKey(pressed_array){
-        var angle = 0;
+        var angle = 180;
         if(pressed_array[0] == true){
             angle = 180;
         } else if(pressed_array[1] == true){
@@ -156,6 +158,11 @@ class Character{
 
     setDeltaMovement(delta){
         this.deltaMovement = delta;
+    }
+
+    getActorPosition(){
+        var position = [this.posx, this.posy, this.posz];
+        return position;
     }
 }
 
