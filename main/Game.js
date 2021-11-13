@@ -98,8 +98,10 @@ class Game{
 
         this.setEnvironment();
         
-        // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
-     
+         // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
+        const controls = new OrbitControls( this.camera, this.renderer.domElement );
+        controls.target.set(0, 1, 0);
+        controls.update();
 		
 		window.addEventListener('resize', this.resize.bind(this) );
 
