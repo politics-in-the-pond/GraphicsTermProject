@@ -5,20 +5,30 @@ class Camera{
     biasy = 1;
     beforePositionx=0;
     beforePositionz=0;
-
+    constructor()
+    {
+      
+    }
+    reset()
+    {
+      this.camera.position.y = 2;
+      this.camera.rotation.x = 30 * Math.PI / 180;
+      this.camera.rotation.y = 180 * Math.PI / 180;
+      this.camera.rotation.z = 0 * Math.PI / 180;
+    }
     setCamera(camera)
     {
         this.camera = camera;
-        camera.position.y = 3;
-        camera.rotation.x = 40 * Math.PI / 180;
+        camera.position.y = 2;
+        camera.rotation.x = 30 * Math.PI / 180;
         camera.rotation.y = 180 * Math.PI / 180;
         camera.rotation.z = 0 * Math.PI / 180;
     }
 
     setCameraPosition(pos){
         var boundaryx = 2;
-        var boundaryy = 2;
-        var smoothing = 50
+        var boundaryy = 10;
+        var smoothing = 100
         var deltaMovement = 0.01;
 
     //camera 이동 
@@ -51,7 +61,7 @@ class Camera{
       this.beforePositionx = this.camera.position.x;
       this.beforePositionz = this.camera.position.z;
       this.camera.position.x += 0;
-      this.camera.position.z -= 1.5;
+      this.camera.position.z -= 3;
       //camera 이동 
     }
 
