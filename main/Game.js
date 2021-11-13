@@ -5,8 +5,7 @@ import { RGBELoader } from '../libs/three128/RGBELoader.js';
 import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
 import { Character } from '../Character.js';
-import { Camera } from '../Camera.js';
-
+import { Obstacles } from './Obstacles.js';
 var pressed_array = [false, false, false, false];
 
 
@@ -69,12 +68,10 @@ class Game{
         this.loadingBar.visible = false;
 
 		this.assetsPath = '../assets/';
-
-        this.movableCam = new Camera();
         
 		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 50 );
-		this.camera.position.set( 0, 1, 3 );
-        this.camera.rotation.x = 180 * Math.PI / 180;
+		this.camera.position.set( 1, 1.7, 2.8 );
+        //this.camera.rotation.x = 180 * Math.PI / 180;
         
 		let col = 0x605550;
 		this.scene = new THREE.Scene();
@@ -87,7 +84,7 @@ class Game{
         light.position.set( 0.2, 1, 1 );
 		
         this.character = new Character(this.loadCharacter());
-
+        this.obstacle = new Obstacles(this);
         // antialiasing을 활성화합니다.
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		// 렌더러의 비율을 사용하는 기기화면 비율에 맞추어 조정합니다.
@@ -97,11 +94,11 @@ class Game{
 		container.appendChild( this.renderer.domElement );
 
         this.setEnvironment();
-        
-         // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
+    
+        // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
         const controls = new OrbitControls( this.camera, this.renderer.domElement );
         controls.target.set(0, 1, 0);
-        controls.update();
+		controls.update();
 		
 		window.addEventListener('resize', this.resize.bind(this) );
 
@@ -140,6 +137,36 @@ class Game{
         } );
     }
 
+
+    loadObstacle() {
+
+        const loader = new GLTFLoader().setPath(`${Obstacle.obstaclePath}`);
+        this.loaded = false;
+        
+        loader.load(
+
+            // gltf resource
+            'scene.gltf',
+
+            // resource가 loading 될때 불린다.
+            gltf => {
+                this.thorn = gltf.scene.children[0];
+                this.thorn.name = 'thron';
+                this.thorn.position.set(2,0,1)
+                this.thorn.visible = true;
+                this.scene.add(this.thorn);
+                
+                
+            },
+            xhr => { },
+            err => {console.log(err);}
+        );
+
+
+        this.loaded = true;
+    }
+
+
     loadCharacter(){
     	const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
         const dracoLoader = new DRACOLoader();
@@ -154,6 +181,9 @@ class Game{
         loader.load(
             'eve.glb',
          gltf => {
+
+            // eve에 gltf.scene을 넣어줌으로 eve의 모든 animation과 textur를 넣어줍니다.
+            this.eve = gltf.scene;
             this.scene.add(gltf.scene);
             this.character.setActor(gltf);
             // method that will trigger a new animation
@@ -174,11 +204,9 @@ class Game{
     
 
 	render() {
-		const dt = this.clock.getDelta();
-        this.character.update(pressed_array);
+		const dt = this.clock.getDelta();   // get elapsed time
+        this.character.update(pressed_array); 
         if(pressed_array !== undefined) this.character.move(pressed_array);
-        var actorPosition = this.character.getActorPosition();
-        //this.controls.target.set(0, actorPosition[1], 0);
         if(this.character.mixer !== undefined) this.character.mixer.update(dt);
         this.renderer.render( this.scene, this.camera );
     }
