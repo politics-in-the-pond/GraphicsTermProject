@@ -13,8 +13,6 @@ class Character{
         this.posy = 0;
         this.posz = 0;
     }
-
-   	
     
 	AnimationUpdate(index){
 		const keys = Object.keys(this.animations);
@@ -45,6 +43,7 @@ class Character{
 
         }
 	}
+
     setActor(actor)
     {
         this.actor=actor.scene;
@@ -60,6 +59,7 @@ class Character{
         this.actionName = '';   // since we have no animatinos at the moment we initialize this to an empty string
 
     }
+
     calcPosition(pressed_array){
         //console.log(pressed_array)
         if(pressed_array[0]){
@@ -113,8 +113,45 @@ class Character{
 
     move(pressed_array){
         this.calcPosition(pressed_array);
+        var angle = this.getRotationFromKey(pressed_array);
+        if(angle!= -1){
+            this.setRotationY(angle);
+        }
         this.actor.position.set(this.posx, this.posz, this.posy);
         //console.log(pressed_array[0])
+    }
+
+    getRotationFromKey(pressed_array){
+        var angle = 0;
+        if(pressed_array[0] == true){
+            angle = 180;
+        } else if(pressed_array[1] == true){
+            angle = 0;
+        } else if(pressed_array[2] == true){
+            angle = 270;
+        } else if(pressed_array[3] == true){
+            angle = 90;
+        }else{
+            angle = -1;
+        }
+
+        if(pressed_array[0] == true && pressed_array[1] == false && pressed_array[2] == true && pressed_array[3] == false){
+            angle = 225;
+        } else if(pressed_array[0] == true && pressed_array[1] == false && pressed_array[2] == false && pressed_array[3] == true){
+            angle = 135;
+        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == true && pressed_array[3] == false){
+            angle = 315;
+        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == false && pressed_array[3] == true){
+            angle = 45;
+        } else{
+
+        }
+
+        return angle;
+    }
+
+    setRotationY(y){
+        this.actor.rotation.set(0, y * Math.PI / 180, 0);
     }
 
     setDeltaMovement(delta){
