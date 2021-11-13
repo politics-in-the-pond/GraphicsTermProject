@@ -83,7 +83,7 @@ class Game{
         light.position.set( 0.2, 1, 1 );
 		
         this.character = new Character(this.loadCharacter());
-        // this.obstacle = new Obstacles(this);
+        this.obstacle = new Obstacles(this);
         // antialiasing을 활성화합니다.
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		// 렌더러의 비율을 사용하는 기기화면 비율에 맞추어 조정합니다.
@@ -173,6 +173,43 @@ class Game{
 
 
 
+
+
+    loadCharacter(){
+    	const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath('../libs/three128/draco/');
+        loader.setDRACOLoader(dracoLoader);
+
+        this.loadingBar.visible = true;
+
+        // this.scene = gltf.scene;
+
+        // gltf 파일을 받아오는 부분입니다.
+        loader.load(
+            'eve.glb',
+         gltf => {
+
+            // eve에 gltf.scene을 넣어줌으로 eve의 모든 animation과 textur를 넣어줍니다.
+            this.eve = gltf.scene;
+            this.scene.add(gltf.scene);
+            this.character.setActor(gltf);
+            // method that will trigger a new animation
+            //this.newAnim();
+            this.loadingBar.visible = false;
+            this.renderer.setAnimationLoop(this.render.bind(this));
+            //this.plane = gltf.scene;            
+        },
+        xhr => { 
+            this.loadingBar.progress = (xhr.loaded/xhr.total);
+        },
+        err => {
+            console.error(err.message);
+        }
+        );
+	}		
+    //애니메이션 판단용 코드.
+    
 
 	render() {
 		const dt = this.clock.getDelta();   // get elapsed time

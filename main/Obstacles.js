@@ -8,7 +8,8 @@ class Obstacles {
     constructor(game){
         this.game = game;
         this.scene = game.scene;
-		this.tmpPos = new Vector3();
+        this.position = new THREE.Vector3(0,0,0);
+        this.isFirst;
         this.load();
         
     }
@@ -16,7 +17,7 @@ class Obstacles {
 
     load() {
 
-        const loader = new GLTFLoader().setPath(`${Obstacle.obstaclePath}`);
+        const loader = new GLTFLoader().setPath(`${Obstacles.obstaclePath}`);
         this.loaded = false;
         
         loader.load(

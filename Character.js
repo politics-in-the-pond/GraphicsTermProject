@@ -26,7 +26,7 @@ class Character{
 
         if(clip!==undefined){
             const action = this.mixer.clipAction(clip);
-
+            
             action.reset();
             
             if(name == 'shot'){
