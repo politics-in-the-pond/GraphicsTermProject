@@ -5,8 +5,8 @@ import { RGBELoader } from '../libs/three128/RGBELoader.js';
 import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
 import { Character } from '../Character.js';
+import { Obstacles } from './Obstacles.js';
 import { Camera } from '../Camera.js';
-
 var pressed_array = [false, false, false, false];
 
 
@@ -69,9 +69,7 @@ class Game{
         this.loadingBar.visible = false;
 
 		this.assetsPath = '../assets/';
-
         this.movableCam = new Camera();
-        
         this.movableCam.setCamera(new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.001, 1000 ));
         
 		let col = 0x605550;
@@ -85,7 +83,7 @@ class Game{
         light.position.set( 0.2, 1, 1 );
 		
         this.character = new Character(this.loadCharacter());
-
+        // this.obstacle = new Obstacles(this);
         // antialiasing을 활성화합니다.
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		// 렌더러의 비율을 사용하는 기기화면 비율에 맞추어 조정합니다.
@@ -137,6 +135,8 @@ class Game{
         } );
     }
 
+
+
     loadCharacter(){
     	const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
         const dracoLoader = new DRACOLoader();
@@ -151,6 +151,9 @@ class Game{
         loader.load(
             'eve.glb',
          gltf => {
+
+            // eve에 gltf.scene을 넣어줌으로 eve의 모든 animation과 textur를 넣어줍니다.
+            this.eve = gltf.scene;
             this.scene.add(gltf.scene);
             this.character.setActor(gltf);
             // method that will trigger a new animation
@@ -171,12 +174,12 @@ class Game{
     
 
 	render() {
-		const dt = this.clock.getDelta();
-        this.character.update(pressed_array);
+		const dt = this.clock.getDelta();   // get elapsed time
+        this.character.update(pressed_array); 
         if(pressed_array !== undefined) this.character.move(pressed_array);
+        this.character.addDeltaMovementy(0.01)
         var actorPosition = this.character.getActorPosition();
         this.movableCam.setCameraPosition(actorPosition);
-        console.log(this.movableCam.camera.position)
         if(this.character.mixer !== undefined) this.character.mixer.update(dt);
         this.renderer.render( this.scene, this.movableCam.getCamera() );
     }
