@@ -72,7 +72,7 @@ class Game{
 
         this.movableCam = new Camera();
         
-        this.movableCam.setCamera(new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 0.001, 1000 ));
+        this.movableCam.setCamera(new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.001, 1000 ));
         
 		let col = 0x605550;
 		this.scene = new THREE.Scene();
@@ -176,7 +176,6 @@ class Game{
         if(pressed_array !== undefined) this.character.move(pressed_array);
         var actorPosition = this.character.getActorPosition();
         this.movableCam.setCameraPosition(actorPosition);
-        console.log(this.movableCam.camera.position)
         if(this.character.mixer !== undefined) this.character.mixer.update(dt);
         this.renderer.render( this.scene, this.movableCam.getCamera() );
     }

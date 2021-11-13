@@ -50,7 +50,7 @@ class Camera{
       this.beforePositionx = this.camera.position.x;
       this.beforePositionz = this.camera.position.z;
       this.camera.position.x += 0;
-      this.camera.position.z += 1.2;
+      this.camera.position.z += 2;
       //camera 이동 
     }
 
