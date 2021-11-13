@@ -13,11 +13,13 @@ window.onload=function init(){
     document.getElementById("MenuQuitBtn"),
     document.getElementById("SettingResetBtn"),
     document.getElementById("SettingSaveCloseBtn"),
+    document.getElementById("CreatorsBackBtn"),
   ];
   var Menu =[
     document.getElementById("TitleMenu"),
     document.getElementById("GameMenu"),
-    document.getElementById("SettingMenu")
+    document.getElementById("SettingMenu"),
+    document.getElementById("Creators")
   ];
   var Component =[
     document.getElementById("LifeArea"),
@@ -42,7 +44,10 @@ window.onload=function init(){
       Menu[2].style.display = "flex";
     }
   });
-  
+  button[2].addEventListener("click", () => { //제작자들 버튼
+      Menu[0].style.display = "none";
+      Menu[3].style.display = "flex";
+  });
   button[3].addEventListener("click", () => { //인게임 메뉴버튼
     if(!menuEnabled)
     {
@@ -82,5 +87,10 @@ window.onload=function init(){
     }
     optionEnabled=false;
     Menu[2].style.display = "none";
+  });
+
+  button[10].addEventListener("click", () => { //종료 버튼
+    Menu[0].style.display = "flex";
+    Menu[3].style.display = "none";
   });
 }
