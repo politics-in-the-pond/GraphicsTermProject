@@ -152,11 +152,8 @@ class Game{
          gltf => {
             this.scene.add(gltf.scene);
             this.character.setActor(gltf);
-            
-           
             // method that will trigger a new animation
             //this.newAnim();
-
             this.loadingBar.visible = false;
             this.renderer.setAnimationLoop(this.render.bind(this));
             this.plane = gltf.scene;            
@@ -176,7 +173,7 @@ class Game{
 		const dt = this.clock.getDelta();
         this.character.update(pressed_array);
         if(pressed_array !== undefined) this.character.move(pressed_array);
-        if(this.mixer !== undefined) this.mixer.update(dt);
+        if(this.character.mixer !== undefined) this.character.mixer.update(dt);
         this.renderer.render( this.scene, this.camera );
     }
 }

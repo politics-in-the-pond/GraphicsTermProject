@@ -49,7 +49,6 @@ class Character{
         this.actor=actor.scene;
         this.mixer = new THREE.AnimationMixer(actor.scene);
         this.animations = {};
-    
         actor.animations.forEach(animation => {
             this.animations[animation.name.toLowerCase()] = animation;
         });
@@ -102,10 +101,10 @@ class Character{
 
         if(pressed_buffer[0] == false && pressed_buffer[1] == true){ //running으로 변경
             console.log("now running");
-            this.AnimationUpdate(0);
+            this.AnimationUpdate(3);
         }else if(pressed_buffer[0] == true && pressed_buffer[1] == false){ //idle로 변경
             console.log("stop running");
-            this.AnimationUpdate(1);
+            this.AnimationUpdate(2);
         }
 
         return 0;
