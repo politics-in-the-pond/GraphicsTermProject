@@ -11,7 +11,7 @@ class Character{
     constructor(){
         this.deltaMovement = 0.01;
         this.posx = 0;
-        this.posy = -1;
+        this.posy = 0;
         this.posz = 0;
     }
     
@@ -116,8 +116,8 @@ class Character{
         if(angle!= -1){
             this.setRotationY(angle);
         }
-        this.actor.position.set(this.posx, this.posz, this.posy);
-        //console.log(pressed_array[0])
+        this.actor.position.set(this.posx, this.posy, this.posz);
+        console.log(this.posy)
     }
 
     getRotationFromKey(pressed_array){
@@ -151,6 +151,10 @@ class Character{
 
     setRotationY(y){
         this.actor.rotation.set(0, y * Math.PI / 180, 0);
+    }
+
+    addDeltaMovementy(delta){
+        this.posy += delta;
     }
 
     setDeltaMovement(delta){

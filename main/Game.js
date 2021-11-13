@@ -174,6 +174,7 @@ class Game{
 		const dt = this.clock.getDelta();
         this.character.update(pressed_array);
         if(pressed_array !== undefined) this.character.move(pressed_array);
+        this.character.addDeltaMovementy(0.01)
         var actorPosition = this.character.getActorPosition();
         this.movableCam.setCameraPosition(actorPosition);
         if(this.character.mixer !== undefined) this.character.mixer.update(dt);
