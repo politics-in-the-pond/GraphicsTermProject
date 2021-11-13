@@ -4,11 +4,63 @@ import { DRACOLoader } from '../libs/three128/DRACOLoader.js';
 import { RGBELoader } from '../libs/three128/RGBELoader.js';
 import { OrbitControls } from '../libs/three128/OrbitControls.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
+import { Character } from '../Character.js';
+
+var pressed_array = [false, false, false, false];
+
 
 class Game{
+
 	constructor(){
+
+        function whenKeyDown(pressed_array){
+            var keyCode = event.which;
+                // up w
+            if (keyCode == 87) {
+                pressed_array[0] = true;
+            }
+                // down s
+            if (keyCode == 83) {
+                pressed_array[1] = true;
+            }
+                // left a
+            if (keyCode == 65) {
+                pressed_array[2] = true;
+            }
+                // right d
+            if (keyCode == 68) {
+                pressed_array[3] = true;
+            }
+
+            return pressed_array;
+        }
+    
+        function whenKeyUp(pressed_array){
+            var keyCode = event.which;
+                // up w
+            if (keyCode == 87) {
+                pressed_array[0] = false;
+            }
+                // down s
+            if (keyCode == 83) {
+                pressed_array[1] = false;
+            }
+                // left a
+            if (keyCode == 65) {
+                pressed_array[2] = false;
+            }
+                // right d
+            if (keyCode == 68) {
+                pressed_array[3] = false;
+            }
+
+            return pressed_array;
+        }
+
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
+
+      
         
 		this.clock = new THREE.Clock();
         // loadingBar를 만듭니다.
@@ -19,11 +71,11 @@ class Game{
         
 		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 50 );
 		this.camera.position.set( 1, 1.7, 2.8 );
+        //this.camera.rotation.x = 180 * Math.PI / 180;
         
 		let col = 0x605550;
 		this.scene = new THREE.Scene();
-		this.scene.background = new THREE.Color( col );
-		
+		this.scene.background = new THREE.Color( col );	
         
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
 		this.scene.add(ambient);
@@ -31,6 +83,8 @@ class Game{
         const light = new THREE.DirectionalLight();
         light.position.set( 0.2, 1, 1 );
 		
+        this.character = new Character(this.loadCharacter());
+
         // antialiasing을 활성화합니다.
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		// 렌더러의 비율을 사용하는 기기화면 비율에 맞추어 조정합니다.
@@ -38,17 +92,19 @@ class Game{
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
         this.renderer.outputEncoding = THREE.sRGBEncoding;
 		container.appendChild( this.renderer.domElement );
+
         this.setEnvironment();
         
         // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
-        const controls = new OrbitControls( this.camera, this.renderer.domElement );
-        controls.target.set(0, 1, 0);
-		controls.update();
-
-        this.loadEve();
+     
 		
 		window.addEventListener('resize', this.resize.bind(this) );
-        
+
+        document.addEventListener("keydown", onDocumentKeyDown, false);
+        function onDocumentKeyDown(event) {pressed_array = whenKeyDown(pressed_array);};
+
+        document.addEventListener("keyup", onDocumentKeyUp, false);
+        function onDocumentKeyUp(event) {pressed_array = whenKeyUp(pressed_array);};
 	}
 	
     resize(){
@@ -79,7 +135,7 @@ class Game{
         } );
     }
 
-    loadEve(){
+    loadCharacter(){
     	const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath('../libs/three128/draco/');
@@ -93,27 +149,11 @@ class Game{
         loader.load(
             'eve.glb',
          gltf => {
-
-            // eve에 gltf.scene을 넣어줌으로 eve의 모든 animation과 textur를 넣어줍니다.
-            this.eve = gltf.scene;
             this.scene.add(gltf.scene);
-            this.mixer = new THREE.AnimationMixer(gltf.scene);
-
-            this.animations = {};
-            
-            gltf.animations.forEach(animation => {
-                this.animations[animation.name.toLowerCase()] = 
-                animation;
-            });
-
-            this.actionName = '';   // since we have no animatinos at the moment we initialize this to an empty string
-
-
+            this.character.setActor(gltf);
             // method that will trigger a new animation
-            this.newAnim();
-
+            //this.newAnim();
             this.loadingBar.visible = false;
-
             this.renderer.setAnimationLoop(this.render.bind(this));
             this.plane = gltf.scene;            
         },
@@ -124,49 +164,15 @@ class Game{
             console.error(err.message);
         }
         );
-	}			
+	}		
+    //애니메이션 판단용 코드.
     
-	newAnim(){
-		const keys = Object.keys(this.animations);
-
-        let index;
-
-        do{
-            index = Math.floor( Math.random() * keys.length);
-        }while(keys[index] == this.actionName);
-
-        this.action = keys[index];
-
-        setTimeout(this.newAnim.bind(this), 3000);
-	}
-
-	set action(name){   // setter method when we called we set the game property action
-		const clip = this.animations[name];
-
-        if(clip!==undefined){
-            const action = this.mixer.clipAction(clip);
-
-            action.reset();
-            
-            if(name == 'shot'){
-                action.setLoop(THREE.LoopOnce);
-            }
-            this.actionName = name;
-            action.play();
-            
-            if(this.curAction){
-                this.curAction.crossFadeTo(action, 0.5);
-            }
-
-            this.curAction = action;
-        }
-	}
 
 	render() {
 		const dt = this.clock.getDelta();
-
-        if(this.mixer !== undefined) this.mixer.update(dt);
-
+        this.character.update(pressed_array);
+        if(pressed_array !== undefined) this.character.move(pressed_array);
+        if(this.character.mixer !== undefined) this.character.mixer.update(dt);
         this.renderer.render( this.scene, this.camera );
     }
 }
