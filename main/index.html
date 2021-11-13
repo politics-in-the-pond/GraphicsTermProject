@@ -5,15 +5,19 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3, user-scalable=no">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
     
   <style>
-      body{
+@import url('https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap');
+    body{
           margin: 0;
+         
       }  
-     
+     *{
+        font-family: 'Black And White Picture', sans-serif;
+     }
     #GameMenuBtn{  
         float: right;
         position: absolute;
@@ -67,9 +71,10 @@
         flex:1;
         display: flex;
         flex-direction: column;
-        background-color: bisque;
+        background-color: rgb(207, 209, 218);
         text-align: center;
         vertical-align:middle;
+        font-family: 'Black Han Sans', sans-serif;
     } 
     .MenuBtn{
         margin: 10px;
@@ -99,25 +104,26 @@
     }
     #SettingBox{
         height: auto;
-        width: 30%;
-        flex:1;
+        width: 35%;
+        flex:1.2;
         display: flex;
         flex-direction: column;
-        background-color: bisque;
+        background-color: rgb(207, 209, 218);
         text-align: center;
         vertical-align:middle;
+        font-family: 'Black Han Sans', sans-serif;
+        font-size:1.5em;
     } 
     #SettingBottomDiv{
-        display: flex; 
+        display: flex;
     }
-    .SettingBtn{
-        margin: 10px;
-    }
+ 
     #LifeArea{
         position:absolute;
+        
         top:10px;
         left:10px;
-        display: flex;
+        display: none;
         width: 500px;
         height: 100px;
     }
@@ -125,14 +131,42 @@
         width:80px;
         height:80px;
     }
-    
+    #Distance{
+        position: absolute;
+        display: none;
+        top:50px;
+        width: 100%;
+        text-align: center;
+        vertical-align:middle;
+        font-size:3em;
+    }
+    .Button{
+        height: 40px;
+        font-size:1.5em;
+        border: thick solid #484c6483;
+        background-color: #afe3e783;
+    }
+    .Button:hover{
+        height: 40px;
+        font-size:1.5em;
+        border: thick solid #50102e83;
+        background-color: #90494f83;
+    }
+    .SettingBtn{
+        margin: 10px;
+        font-size:0.7em !important;
+        flex:3;
+    }
     
   </style>
   </head>
 
 <body>
+ 
     <script type="module" src="../UI.js"></script>
-        <button type="button" id="GameMenuBtn">게임메뉴</button>
+    
+        <button type="button" id="GameMenuBtn" class="Button">게임메뉴</button>
+        <div id="Distance">00 M</div>
         <div id="LifeArea">
             <img class="Life" id="Life1"
             src="../assets/life/0.png"
@@ -147,9 +181,9 @@
         <div id="TitleMenu">
             <div class="MenuChild"></div>
             <div class="MenuChild" id="MenuBox">
-                <button type="button" id="GameStartBtn"class="MenuBtn">게임시작</button>
-                <button type="button" id="GameSettingBtn" class="MenuBtn">게임설정</button>
-                <button type="button" id="GameCreatorsBtn"class="MenuBtn">제작자들</button>
+                <button type="button" id="GameStartBtn"class="MenuBtn Button">게임시작</button>
+                <button type="button" id="GameSettingBtn" class="MenuBtn Button">게임설정</button>
+                <button type="button" id="GameCreatorsBtn"class="MenuBtn Button">제작자들</button>
             </div>
             <div class="MenuChild"></div>
         </div>
@@ -158,10 +192,10 @@
         <div id="GameMenu">
             <div class="MenuChild"></div>
             <div class="MenuChild" id="MenuBox">
-                <button type="button" id="MenuResumeBtn" class="MenuBtn"> 계속하기 </button>
-                <button type="button" id="MenuRestartBtn" class="MenuBtn"> 다시하기 </button>
-                <button type="button" id="MenuSettingBtn" class="MenuBtn"> 게임설정 </button>
-                <button type="button" id="MenuQuitBtn" class="MenuBtn"> 종료하기 </button>
+                <button type="button" id="MenuResumeBtn" class="MenuBtn Button"> 계속하기 </button>
+                <button type="button" id="MenuRestartBtn" class="MenuBtn Button"> 다시하기 </button>
+                <button type="button" id="MenuSettingBtn" class="MenuBtn Button"> 게임설정 </button>
+                <button type="button" id="MenuQuitBtn" class="MenuBtn Button"> 종료하기 </button>
             </div>
             <div class="MenuChild"></div>
         </div>
@@ -171,11 +205,12 @@
             <div class="SettingChild"></div>
             <div class="SettingChild" id="SettingBox">
                 <div> 게임설정 </div>
-                <button type="button" id="SettingRestartBtn" class="SettingBtn"> 세팅 </button>
-                <button type="button" id="SettingSettingBtn" class="SettingBtn"> 세팅 </button>
+                <button type="button" id="SettingRestartBtn" class="SettingBtn Button"> 세팅 </button>
+                <button type="button" id="SettingSettingBtn" class="SettingBtn Button"> 세팅 </button>
                 <div id="SettingBottomDiv"> 
-                    <button type="button" id="SettingResetBtn" class="SettingBtn"> 기본값으로 </button>
-                    <button type="button" id="SettingSaveCloseBtn" class="SettingBtn"> 저장 후 닫기 </button>
+                    <button type="button" id="SettingResetBtn" class="SettingBtn Button"> 기본값으로 </button>
+                    <div class="SettingBtn" style="flex:0.01;"></div>
+                    <button type="button" id="SettingSaveCloseBtn" class="SettingBtn Button"> 저장 후 닫기 </button>
                 </div>
             </div>
             <div class="SettingChild"></div>

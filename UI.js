@@ -19,6 +19,10 @@ window.onload=function init(){
     document.getElementById("GameMenu"),
     document.getElementById("SettingMenu")
   ];
+  var Component =[
+    document.getElementById("LifeArea"),
+    document.getElementById("Distance"),
+  ];
   var menuEnabled = false;
   var optionEnabled = false;
   button[0].addEventListener("click", () => { //게임시작
@@ -26,6 +30,9 @@ window.onload=function init(){
     window.game = game;
     Menu[0].style.display = "none";
     button[3].style.display = "block";
+    Component[0].style.display = "flex";
+    Component[1].style.display = "block";
+    
   });
   button[1].addEventListener("click", () => { //타이틀설정 버튼
     if(!optionEnabled)

@@ -69,9 +69,7 @@ class Game{
 
 		this.assetsPath = '../assets/';
         
-		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 50 );
-		this.camera.position.set( 1, 1.7, 2.8 );
-        //this.camera.rotation.x = 180 * Math.PI / 180;
+        this.movableCam.setCamera(new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.001, 1000 ));
         
 		let col = 0x605550;
 		this.scene = new THREE.Scene();
@@ -84,7 +82,7 @@ class Game{
         light.position.set( 0.2, 1, 1 );
 		
         this.character = new Character(this.loadCharacter());
-        this.obstacle = new Obstacles(this);
+        // this.obstacle = new Obstacles(this);
         // antialiasing을 활성화합니다.
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true } );
 		// 렌더러의 비율을 사용하는 기기화면 비율에 맞추어 조정합니다.
@@ -94,11 +92,10 @@ class Game{
 		container.appendChild( this.renderer.domElement );
 
         this.setEnvironment();
-    
-        // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
-        const controls = new OrbitControls( this.camera, this.renderer.domElement );
-        controls.target.set(0, 1, 0);
-		controls.update();
+        
+         // 우리들이 마우스 조작을 통해서 카메라의 위치를 바꿀 수 있게 합니다.
+         
+
 		
 		window.addEventListener('resize', this.resize.bind(this) );
 
@@ -137,34 +134,6 @@ class Game{
         } );
     }
 
-
-    loadObstacle() {
-
-        const loader = new GLTFLoader().setPath(`${Obstacle.obstaclePath}`);
-        this.loaded = false;
-        
-        loader.load(
-
-            // gltf resource
-            'scene.gltf',
-
-            // resource가 loading 될때 불린다.
-            gltf => {
-                this.thorn = gltf.scene.children[0];
-                this.thorn.name = 'thron';
-                this.thorn.position.set(2,0,1)
-                this.thorn.visible = true;
-                this.scene.add(this.thorn);
-                
-                
-            },
-            xhr => { },
-            err => {console.log(err);}
-        );
-
-
-        this.loaded = true;
-    }
 
 
     loadCharacter(){
@@ -207,8 +176,10 @@ class Game{
 		const dt = this.clock.getDelta();   // get elapsed time
         this.character.update(pressed_array); 
         if(pressed_array !== undefined) this.character.move(pressed_array);
+        var actorPosition = this.character.getActorPosition();
+        this.movableCam.setCameraPosition(actorPosition);
         if(this.character.mixer !== undefined) this.character.mixer.update(dt);
-        this.renderer.render( this.scene, this.camera );
+        this.renderer.render( this.scene, this.movableCam.getCamera() );
     }
 }
 

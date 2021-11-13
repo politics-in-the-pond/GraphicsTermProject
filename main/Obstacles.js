@@ -11,10 +11,38 @@ class Obstacles {
         this.loadThornPillar();
         this.position = Vector3(0,0,0);
         this.isFirst;
+        this.load();
         
     }
 
 
+    load() {
+
+        const loader = new GLTFLoader().setPath(`${Obstacle.obstaclePath}`);
+        this.loaded = false;
+        
+        loader.load(
+
+            // gltf resource
+            'scene.gltf',
+
+            // resource가 loading 될때 불린다.
+            gltf => {
+                this.thorn = gltf.scene.children[0];
+                this.thorn.name = 'thron';
+                this.thorn.position.set(2,0,1)
+                this.thorn.visible = true;
+                this.scene.add(this.thorn);
+                
+                
+            },
+            xhr => { },
+            err => {console.log(err);}
+        );
+
+
+        this.loaded = true;
+    }
    
 
    
