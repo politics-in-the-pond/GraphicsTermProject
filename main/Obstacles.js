@@ -30,7 +30,7 @@ class Obstacles {
             gltf => {
                 this.thorn = gltf.scene.children[0];
                 this.thorn.name = 'landMine';
-                this.thorn.position.set(0,2,1);
+                this.thorn.position.set(0,0,1);
                 this.thorn.visible = true;
                 this.scene.add(this.thorn);
                 
@@ -46,7 +46,9 @@ class Obstacles {
    
 
    
-    update(){
+    update(pos, time){
+
+
 
     }
 
