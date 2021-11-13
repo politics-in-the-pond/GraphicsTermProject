@@ -138,6 +138,8 @@ class Game{
 
 
 
+
+
     loadCharacter(){
     	const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
         const dracoLoader = new DRACOLoader();
@@ -161,7 +163,7 @@ class Game{
             //this.newAnim();
             this.loadingBar.visible = false;
             this.renderer.setAnimationLoop(this.render.bind(this));
-            this.plane = gltf.scene;            
+            //this.plane = gltf.scene;            
         },
         xhr => { 
             this.loadingBar.progress = (xhr.loaded/xhr.total);
