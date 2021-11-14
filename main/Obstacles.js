@@ -78,7 +78,6 @@ class Obstacles {
         overmenu.style.display="flex";
         menuBtn.style.display="none";
         this.game.pause=true;
-
     }
     load() {
 
