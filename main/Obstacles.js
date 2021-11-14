@@ -33,8 +33,7 @@ class Obstacles {
                 this.thorn.position.set(0,0,1);
                 this.thorn.visible = true;
                 this.scene.add(this.thorn);
-                
-                
+                 
             },
             xhr => { },
             err => {console.log(err);}
@@ -45,10 +44,41 @@ class Obstacles {
     }
    
 
-   
-    update(pos, time){
+    update(pos, dt){
+        let collisionObstacle;
+
+        this.obstacles.forEach( obstacle =>{
+            obstacle.children[0].rotateY(0.01);
+            const relativePosZ = obstacle.position.z-pos.z;
+            if (Math.abs(relativePosZ)<2){
+                collisionObstacle = obstacle;
+            }
+            if (relativePosZ<-20){
+                this.respawnObstacle(obstacle); 
+            }
+        });
+
+       
+        if (collisionObstacle!==undefined){
+			let minDist = Infinity;
+			collisionObstacle.children.some( child => {
+				child.getWorldPosition(this.tmpPos);
+				const dist = this.tmpPos.distanceToSquared(pos);
+				if (dist<minDist) minDist = dist;
+                if (dist<5 && !collisionObstacle.userData.hit){
+					collisionObstacle.userData.hit = true;
+					console.log(`Closest obstacle is ${minDist.toFixed(2)}`);
+					this.hit(child);
+                    return true;
+                }
+            })
+            
+        }
 
 
+        this.explosions.forEach(explosion => {
+            explosion.update(dt);   // delta time을 업데이트 한다.
+        })
 
     }
 
