@@ -142,6 +142,7 @@ class Obstacles {
         this.currentMinePosz=1;
         this.life=3;
         this.lifeChanged();
+
         for (let index = 1; index < this.mineNumber; index++) {
             this.replaceLandmine(this.landmineQueue.dequeue());
         }
