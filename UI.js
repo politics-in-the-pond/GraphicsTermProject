@@ -23,7 +23,8 @@ window.onload=function init(){
     document.getElementById("CreatorsBackBtn"),
     document.getElementById("OverRestartBtn"),
     document.getElementById("OverQuitBtn"),
-
+    document.getElementById("GameHelpBtn"),
+    document.getElementById("HelpBackBtn"),
   ];
   var Menu =[
     document.getElementById("TitleMenu"),
@@ -31,6 +32,7 @@ window.onload=function init(){
     document.getElementById("SettingMenu"),
     document.getElementById("Creators"),
     document.getElementById("GameOverMenu"),
+    document.getElementById("Help"),
   ];
   var Component =[
     document.getElementById("LifeArea"),
@@ -84,6 +86,15 @@ window.onload=function init(){
       Menu[0].style.display = "none";
       Menu[3].style.display = "flex";
   });
+
+  button[13].addEventListener("click", () => { //제작자들 버튼
+    Menu[0].style.display = "none";
+    Menu[5].style.display = "flex";
+});
+button[14].addEventListener("click", () => { //뒤로가기 버튼
+  Menu[0].style.display = "flex";
+  Menu[5].style.display = "none";
+});
   button[3].addEventListener("click", () => { //인게임 메뉴버튼
     if(!menuEnabled)
     {
