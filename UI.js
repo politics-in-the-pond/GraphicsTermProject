@@ -6,7 +6,7 @@ var SFX = [
 var BGM = [
   new Audio('/assets/BGM_Ingame.mp3'),
   new Audio('/assets/BGM_End.wav'),
-];
+];/*Sound List*/
 
 window.onload=function init(){
   var button = [
@@ -25,7 +25,7 @@ window.onload=function init(){
     document.getElementById("OverQuitBtn"),
     document.getElementById("GameHelpBtn"),
     document.getElementById("HelpBackBtn"),
-  ];
+  ];/*Button List*/
   var Menu =[
     document.getElementById("TitleMenu"),
     document.getElementById("GameMenu"),
@@ -33,40 +33,39 @@ window.onload=function init(){
     document.getElementById("Creators"),
     document.getElementById("GameOverMenu"),
     document.getElementById("Help"),
-  ];
+  ];/*Menu List*/
   var Component =[
     document.getElementById("LifeArea"),
     document.getElementById("Distance"),
-  ];
+  ];/*Ingame UI List*/
   var Slider =[
     document.getElementById("BGM"),
     document.getElementById("SFX"),
-  ]
+  ]/*Sound Slider List*/
   var menuEnabled = false;
   var optionEnabled = false;
    
   
-  Slider[0].addEventListener("change", () => { //게임시작
+  Slider[0].addEventListener("change", () => { //BGM volume
     BGM.forEach(bgm=>{
       bgm.volume =  Slider[0].value/100;
     });
   });
 
-  Slider[1].addEventListener("change", () => { //게임시작
+  Slider[1].addEventListener("change", () => { //SFX volume
     SFX.forEach(sfx=>{
       sfx.volume =  Slider[1].value/100;
     });
   });
 
   button.forEach(btn =>{
-    btn.addEventListener("click", () => { //게임시작
-      
+    btn.addEventListener("click", () => {  //all Button Sound
       SFX[0].play();
     });
   });
 
 
-  button[0].addEventListener("click", () => { //게임시작
+  button[0].addEventListener("click", () => {//게임시작
     const game = new Game(BGM,SFX); 
     window.game = game;
     Menu[0].style.display = "none";
@@ -123,7 +122,7 @@ button[14].addEventListener("click", () => { //뒤로가기 버튼
   button[7].addEventListener("click", () => { //종료 버튼
     window.open(location, '_self').close();
   });
-  button[8].addEventListener("click", () => { //종료 버튼
+  button[8].addEventListener("click", () => { //sound slider
     Slider.forEach(slider =>{
       slider.value=50;
     });
@@ -136,7 +135,7 @@ button[14].addEventListener("click", () => { //뒤로가기 버튼
       });
    
   });
-  button[9].addEventListener("click", () => { //종료 버튼
+  button[9].addEventListener("click", () => { //설정 저장후 닫기
     if(menuEnabled)
     {
       Menu[1].style.display = "flex";
@@ -149,11 +148,11 @@ button[14].addEventListener("click", () => { //뒤로가기 버튼
     Menu[2].style.display = "none";
   });
 
-  button[10].addEventListener("click", () => { //종료 버튼
+  button[10].addEventListener("click", () => { //제작자들 뒤로가기
     Menu[0].style.display = "flex";
     Menu[3].style.display = "none";
   });
-  button[12].addEventListener("click", () => { //종료 버튼
+  button[12].addEventListener("click", () => { //게임오버 종료 버튼
     window.open(location, '_self').close();
   });
   button[5].addEventListener("click", () => { //재시작 버튼

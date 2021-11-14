@@ -1,7 +1,6 @@
 import * as THREE from "../libs/three128/three.module.js"
 import {GLTFLoader} from "../libs/three128/GLTFLoader.js"
-import {cylinderIntersectsCylinder} from "../libs/Collisions.js"
-import {Explosion} from "../main/Explosion.js"
+
 class Queue {
     constructor() {
       this._arr = [];

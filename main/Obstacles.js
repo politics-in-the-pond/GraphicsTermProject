@@ -170,7 +170,7 @@ class Obstacles {
         landmine.visible = true;
     }
    
-    replaceLandmine(landmine){
+    replaceLandmine(landmine){// landmine 배치
 
         // const x_range = 8;
         // const z_range = 5;
