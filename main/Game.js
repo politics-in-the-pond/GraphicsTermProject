@@ -81,7 +81,7 @@ class Game{
         
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
 		this.scene.add(ambient);
-        this.scene.fog = new THREE.Fog(0xffffff, 2.5, 5);
+        this.scene.fog = new THREE.Fog(0xffffff, 0.1, 50);
 
         const light = new THREE.DirectionalLight();
         light.position.set( 0.2, 1, 1 );
@@ -126,12 +126,14 @@ class Game{
         document.getElementById("MenuRestartBtn").addEventListener("click", () => { //종료 버튼
             this.character.reset();
             this.obstacles.reset();
+            this.deadline.reset();
             this.movableCam.reset(this.character.actor.position); //카메라 리셋 기능 다시 구현 필요
             this.pause=false;
         });
         document.getElementById("OverRestartBtn").addEventListener("click", () => { //종료 버튼
             this.character.reset();
             this.obstacles.reset();
+            this.deadline.reset();
             this.movableCam.reset(this.character.actor.position);
             this.pause=false;
         });
@@ -255,7 +257,7 @@ class Game{
             this.character.update(pressed_array); 
             this.obstacles.update(dt);
             if(pressed_array !== undefined) this.character.move(pressed_array);
-            this.character.addDeltaMovementy(0.01)
+            this.character.addDeltaMovementy(0)
             var actorPosition = this.character.getActorPosition();
             this.deadline.updatePosition(actorPosition);
             this.movableCam.setCameraPosition(actorPosition);

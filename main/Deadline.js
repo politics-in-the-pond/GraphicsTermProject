@@ -4,9 +4,10 @@ class Deadline{
     posx;
     posy;
     posz;
-    smoothing;
+    gameOverThreshold = 0.7;
     game;
     line;
+    beforePositionz = -3;
 
     constructor(game){
         this.posx=0;
@@ -24,12 +25,31 @@ class Deadline{
     }
 
     updatePosition(pos){
-        this.posz = pos[2];
-        this.line.position.x = this.posx;
-        this.line.position.y = this.posy;
-        this.line.position.z = this.posz;
+        var smoothing = 10;
+        var boundaryz = 3;
+        var deltaMovement = 0.015;
+        if( pos[2] - this.beforePositionz < boundaryz)
+        {
+          this.line.position.z=this.beforePositionz+deltaMovement;
+        }
+        else if(this.beforePositionz != pos[2])
+        {
+          this.line.position.z=this.beforePositionz+(pos[2]-this.beforePositionz)/smoothing;
+        }
+        this.beforePositionz = this.line.position.z;
+        this.line.position.z += 0.5;
+        this.checkGameOver(pos);
     }
 
+    checkGameOver(pos){
+        var z = pos[2];
+        var dist = Math.abs(this.beforePositionz - z);
+        console.log(dist);
+        if(dist<this.gameOverThreshold){
+            this.gameOver();
+        }
+    }
+        
     gameOver(){
         var overmenu = document.getElementById("GameOverMenu")
         var menu = document.getElementById("GameMenu")
@@ -37,7 +57,12 @@ class Deadline{
         menu.style.display="none";
         overmenu.style.display="flex";
         menuBtn.style.display="none";
+        this.reset();
         this.game.pause=true;
+    }
+
+    reset(){
+        this.beforePositionz = -3;
     }
 }
 

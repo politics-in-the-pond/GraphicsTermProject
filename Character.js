@@ -6,6 +6,7 @@ class Character{
     posx;
     posy;
     posz;
+    restriction=3;
     deltaMovement;
 
     constructor(){
@@ -16,7 +17,7 @@ class Character{
     }
     reset()
     {
-        this.deltaMovement = 0.01;
+        this.deltaMovement = 0.02;
         this.posx = 0;
         this.posy = 0;
         this.posz = 0;
@@ -50,8 +51,6 @@ class Character{
         }
 	}
 
-
-
     setActor(actor)
     {
         this.actor=actor.scene;
@@ -65,7 +64,7 @@ class Character{
         console.log(this.animations);
 
         this.actionName = '';   // since we have no animatinos at the moment we initialize this to an empty string
-
+        this.setRotationY(0);
     }
 
     calcPosition(pressed_array){
@@ -125,12 +124,17 @@ class Character{
         if(angle!= -1){
             this.setRotationY(angle);
         }
+        if(this.posx > this.restriction){
+            this.posx = this.restriction;
+        }else if(this.posx < -this.restriction){
+            this.posx = -this.restriction;
+        }
         this.actor.position.set(this.posx, this.posy, this.posz);
         document.getElementById("Distance").innerText = Math.floor(this.posz)*10+" M";
     }
 
     getRotationFromKey(pressed_array){
-        var angle = 180;
+        var angle = 0;
         if(pressed_array[0] == true){
             angle = 0;
         } else if(pressed_array[1] == true){
