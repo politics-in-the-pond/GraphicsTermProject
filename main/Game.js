@@ -7,6 +7,7 @@ import { LoadingBar } from '../libs/LoadingBar.js';
 import { Character } from '../Character.js';
 import { Obstacles } from './Obstacles.js';
 import { Camera } from '../Camera.js';
+import { Maps } from '../Maps.js'
 var pressed_array = [false, false, false, false];
 
 
@@ -82,7 +83,7 @@ class Game{
 
         const light = new THREE.DirectionalLight();
         light.position.set( 0.2, 1, 1 );
-		
+		this.Maps = new Maps(this);
         this.character = new Character(this.loadCharacter());
         this.obstacles = new Obstacles(this);
         this.pause=false;
