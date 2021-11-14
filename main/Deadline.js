@@ -57,8 +57,12 @@ class Deadline{
         menu.style.display="none";
         overmenu.style.display="flex";
         menuBtn.style.display="none";
-        this.beforePositionz = -3;
+        this.reset();
         this.game.pause=true;
+    }
+
+    reset(){
+        this.beforePositionz = -3;
     }
 }
 
