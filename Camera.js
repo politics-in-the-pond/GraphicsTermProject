@@ -11,9 +11,18 @@ class Camera{
     }
     reset(actorPos)
     {
+<<<<<<< HEAD
       this.camera.position.y = 2;
       this.beforePositionx = actorPos.x;
       this.beforePositionz = actorPos.z;
+=======
+        this.beforePositionx=0;
+        this.beforePositionz=0;
+        this.camera.position.y = 2;
+        this.camera.rotation.x = 30 * Math.PI / 180;
+        this.camera.rotation.y = 180 * Math.PI / 180;
+        this.camera.rotation.z = 0 * Math.PI / 180;
+>>>>>>> 7438953d5ba7cc864bd82ce03f4ed37f3cede425
     }
     setCamera(camera)
     {
@@ -27,7 +36,7 @@ class Camera{
     setCameraPosition(pos){
         var boundaryx = 2;
         var boundaryy = 10;
-        var smoothing = 100
+        var smoothing = 50;
         var deltaMovement = 0.01;
 
     //camera 이동 
@@ -60,7 +69,7 @@ class Camera{
       this.beforePositionx = this.camera.position.x;
       this.beforePositionz = this.camera.position.z;
       this.camera.position.x += 0;
-      this.camera.position.z -= 3;
+      this.camera.position.z -= 1;
       //camera 이동 
     }
 
