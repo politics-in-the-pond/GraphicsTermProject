@@ -30,6 +30,16 @@ window.onload=function init(){
   ];
   var menuEnabled = false;
   var optionEnabled = false;
+
+  var buttonSound = new Audio('/assets/button_click.wav');
+
+  button.forEach(btn =>{
+    btn.addEventListener("click", () => { //게임시작
+      buttonSound.play();
+    });
+  });
+
+
   button[0].addEventListener("click", () => { //게임시작
     const game = new Game(); 
     window.game = game;
