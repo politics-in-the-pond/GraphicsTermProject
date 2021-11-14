@@ -7,7 +7,6 @@ import { LoadingBar } from '../libs/LoadingBar.js';
 import { Character } from '../Character.js';
 import { Obstacles } from './Obstacles.js';
 import { Camera } from '../Camera.js';
-import { Maps } from './Maps.js'
 import { Deadline } from './Deadline.js';
 
 var pressed_array = [false, false, false, false];
@@ -92,7 +91,6 @@ class Game{
 		
         this.character = new Character(this.loadCharacter());
         this.obstacles = new Obstacles(this);
-        this.maps = new Maps(this);
         this.deadline = new Deadline(this);
         this.pause=false;
         
@@ -201,7 +199,7 @@ class Game{
         // Pre-compiles the equirectangular shader
         const self = this;
         
-        loader.load( 'hdr/factory.hdr', ( texture ) => {
+        loader.load( 'road_free/road.jpg', ( texture ) => {
           // Generates a PMREM from an equirectangular texture, which can be either LDR (RGBFormat) or HDR (RGBEFormat).
           // The ideal input image size is 1k (1024 x 512)  
           const envMap = pmremGenerator.fromEquirectangular( texture ).texture;

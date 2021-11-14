@@ -31,7 +31,7 @@ class Obstacles {
         this.position = new THREE.Vector3(0,90 * Math.PI / 180,0);
         this.rotaion = new THREE.Vector3(0.1,0.1,0.1);
         this.isFirst;
-        this.currentMinePosz=1;
+        this.currentMinePosz=2;
         this.character = this.game.character;
         this.load();
         this.life=3; //라이프를 참조를 계속 못해서 여기로 옮김
