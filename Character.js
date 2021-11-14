@@ -6,6 +6,7 @@ class Character{
     posx;
     posy;
     posz;
+    restriction=3;
     deltaMovement;
 
     constructor(){
@@ -49,8 +50,6 @@ class Character{
             this.curAction = action;
         }
 	}
-
-
 
     setActor(actor)
     {
@@ -124,6 +123,11 @@ class Character{
         var angle = this.getRotationFromKey(pressed_array);
         if(angle!= -1){
             this.setRotationY(angle);
+        }
+        if(this.posx > this.restriction){
+            this.posx = this.restriction;
+        }else if(this.posx < -this.restriction){
+            this.posx = -this.restriction;
         }
         this.actor.position.set(this.posx, this.posy, this.posz);
         document.getElementById("Distance").innerText = Math.floor(this.posz)*10+" M";
