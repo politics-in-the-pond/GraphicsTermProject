@@ -109,6 +109,7 @@ void main() {
             landmine.userHit = false;
         })
     }
+    this.obstacles.game.scene.remove(this.parent);
     // this.obstacles.game.scene.indexOf(parent);
   }
 
