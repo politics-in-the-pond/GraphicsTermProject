@@ -7,11 +7,9 @@ import { LoadingBar } from '../libs/LoadingBar.js';
 import { Character } from '../Character.js';
 import { Obstacles } from './Obstacles.js';
 import { Camera } from '../Camera.js';
-<<<<<<< HEAD
 import { Maps } from '../Maps.js'
-=======
 import { Deadline } from './Deadline.js';
->>>>>>> 0e3e94344a2d01ed4af9b04108b8eca9d5922441
+
 var pressed_array = [false, false, false, false];
 
 
