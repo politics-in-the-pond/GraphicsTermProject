@@ -81,7 +81,7 @@ class Game{
         
 		const ambient = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
 		this.scene.add(ambient);
-        this.scene.fog = new THREE.Fog(0xffffff, 2.5, 5);
+        this.scene.fog = new THREE.Fog(0xffffff, 0.1, 50);
 
         const light = new THREE.DirectionalLight();
         light.position.set( 0.2, 1, 1 );

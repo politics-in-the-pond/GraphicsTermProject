@@ -65,7 +65,7 @@ class Character{
         console.log(this.animations);
 
         this.actionName = '';   // since we have no animatinos at the moment we initialize this to an empty string
-
+        this.setRotationY(0);
     }
 
     calcPosition(pressed_array){
@@ -130,7 +130,7 @@ class Character{
     }
 
     getRotationFromKey(pressed_array){
-        var angle = 180;
+        var angle = 0;
         if(pressed_array[0] == true){
             angle = 0;
         } else if(pressed_array[1] == true){
