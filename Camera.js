@@ -5,7 +5,17 @@ class Camera{
     biasy = 1;
     beforePositionx=0;
     beforePositionz=0;
-
+    constructor()
+    {
+      
+    }
+    reset()
+    {
+      this.camera.position.y = 2;
+      this.camera.rotation.x = 30 * Math.PI / 180;
+      this.camera.rotation.y = 180 * Math.PI / 180;
+      this.camera.rotation.z = 0 * Math.PI / 180;
+    }
     setCamera(camera)
     {
         this.camera = camera;

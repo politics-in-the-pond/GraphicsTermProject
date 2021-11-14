@@ -14,7 +14,13 @@ class Character{
         this.posy = 0;
         this.posz = 0;
     }
-    
+    reset()
+    {
+        this.deltaMovement = 0.01;
+        this.posx = 0;
+        this.posy = 0;
+        this.posz = 0;
+    }
 	AnimationUpdate(index){
 		const keys = Object.keys(this.animations);
         this.action = keys[index];
@@ -119,7 +125,7 @@ class Character{
             this.setRotationY(angle);
         }
         this.actor.position.set(this.posx, this.posy, this.posz);
-        console.log(this.posz)
+        document.getElementById("Distance").innerText = Math.floor(this.posz)*10+" M";
     }
 
     getRotationFromKey(pressed_array){
@@ -156,7 +162,7 @@ class Character{
     }
 
     addDeltaMovementy(delta){
-        //this.posz += delta;
+        this.posz += delta;
     }
 
     setDeltaMovement(delta){

@@ -14,6 +14,9 @@ window.onload=function init(){
     document.getElementById("SettingResetBtn"),
     document.getElementById("SettingSaveCloseBtn"),
     document.getElementById("CreatorsBackBtn"),
+    document.getElementById("OverRestartBtn"),
+    document.getElementById("OverQuitBtn"),
+
   ];
   var Menu =[
     document.getElementById("TitleMenu"),
@@ -93,4 +96,17 @@ window.onload=function init(){
     Menu[0].style.display = "flex";
     Menu[3].style.display = "none";
   });
+  button[12].addEventListener("click", () => { //종료 버튼
+    window.open(location, '_self').close();
+  });
+  button[5].addEventListener("click", () => { //재시작 버튼
+    menuEnabled=false;
+    document.getElementById("GameMenu").style.display="none";
+    document.getElementById("GameMenuBtn").style.display="block";
+});
+button[11].addEventListener("click", () => { //재시작 버튼
+    menuEnabled=false;
+    document.getElementById("GameOverMenu").style.display="none";
+    document.getElementById("GameMenuBtn").style.display="block";
+});
 }
