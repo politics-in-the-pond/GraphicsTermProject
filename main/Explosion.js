@@ -62,7 +62,7 @@ void main() {
     const geometry = new IcosahedronGeometry( 20, 4 );
     
     this.obstacles = obstacles;
-
+    this.parent = parent;
     this.uniforms = {
       u_time: { value: 0.0 },
       u_mouse: { value:{ x:0.0, y:0.0 }},
@@ -85,11 +85,11 @@ void main() {
     const scale = 0.05;
     this.ball.scale.set(scale, scale, scale);
     parent.add( this.ball );
-
+    parent.visible = true;
+    obstacles.game.scene.add(parent);
     this.tweens = [];
     // x 축으로 0.2에서 1.5로 늘린다.
     this.tweens.push( new Tween(this.ball.scale, 'x', 0.2, 1.5, this.onComplete.bind(this), 'outQuad') );
-
     this.active = true;
   }
 
@@ -99,7 +99,17 @@ void main() {
     this.active = false;
     this.ball.geometry.dispose();
     this.ball.material.dispose();
-    if (this.obstacles) this.obstacles.removeExplosion(this);
+    this.parent.visible = false;
+    if (this.obstacles) {
+      this.obstacles.removeExplosion(this);
+
+      this.obstacles.colided.forEach((landmine) => {    
+            landmine.visible = false;
+            this.obstacles.recycleFiredLandmine(landmine);
+            landmine.userHit = false;
+        })
+    }
+    // this.obstacles.game.scene.indexOf(parent);
   }
 
   update(time) {

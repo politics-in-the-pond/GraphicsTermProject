@@ -109,7 +109,7 @@ class Game{
          
 
 		
-	    window.addEventListener('resize', this.resize.bind(this) );
+	    // window.addEventListener('resize', this.resize.bind(this) );
 
         document.addEventListener("keydown", onDocumentKeyDown, false);
         function onDocumentKeyDown(event) {pressed_array = whenKeyDown(pressed_array);};
