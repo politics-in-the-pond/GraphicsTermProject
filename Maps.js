@@ -14,10 +14,10 @@ class Queue {
     }
   }
   
-class Obstacles {
+class Maps {
 
 
-    static obstaclePath = '../assets/'
+    static MapPath = '../assets/'
     constructor(game){
         this.game = game;
         this.scene = game.scene;
@@ -78,10 +78,11 @@ class Obstacles {
         overmenu.style.display="flex";
         menuBtn.style.display="none";
         this.game.pause=true;
+
     }
     load() {
 
-        const loader = new GLTFLoader().setPath(`${Obstacles.obstaclePath}`);
+        const loader = new GLTFLoader().setPath(`${Obstacles.MapPath}`);
         this.loaded = false;
         
         loader.load(
@@ -91,26 +92,26 @@ class Obstacles {
 
             // resource가 loading 될때 불린다.
             gltf => {
-                this.landmine = gltf.scene.children[0];
-                this.landmineWaitQueue=new Queue();
-                this.landmineQueue=new Queue();
-                this.landmine.name = 'landMine';
+                this.map = gltf.scene.children[0];
+                this.mapWaitQueue=new Queue();
+                this.mapQueue=new Queue();
+                this.map.name = 'map';
                
-                this.landmine.visible = true;
+                this.map.visible = true;
                 
 
-                for (let index = 0; index < 10; index++) {
-                    var newMine=this.landmine.clone();
-                    this.scene.add(newMine)
-                    this.landmineWaitQueue.enqueue(newMine);
+                for (let index = 0; index < 3; index++) {
+                    var newMap=this.map.clone();
+                    this.scene.add(newMap)
+                    this.mapWaitQueue.enqueue(newMap);
                 }
-                console.log(this.landmineWaitQueue._arr);
+                console.log(this.mapWaitQueue._arr);
                
-                while(this.landmineWaitQueue._arr.length>0)
+                while(this.mapWaitQueue._arr.length>0)
                 {
-                    this.landmineWaitQueue._arr[0].position.set((Math.random()*2-1)*3,0,this.currentMinePosz);
-                    console.log( this.landmineWaitQueue._arr[0].position);
-                    this.landmineQueue.enqueue(this.landmineWaitQueue.dequeue());
+                    this.mapWaitQueue._arr[0].position.set(0*3,0,this.currentMinePosz);
+                    console.log( this.mapWaitQueue._arr[0].position);
+                    this.mapQueue.enqueue(this.mapWaitQueue.dequeue());
                     this.currentMinePosz=this.currentMinePosz+1;
                 }
                 
@@ -144,80 +145,29 @@ class Obstacles {
         this.life=3;
         this.lifeChanged();
         for (let index = 1; index < 10; index++) {
-            this.replaceLandmine(this.landmineQueue.dequeue());
+            this.replaceMap(this.mapQueue.dequeue());
         }
-
-        while(this.explosions.length >0){
-            this.explosions[0].onComplete();
-        }
-    }
-
-    recycleFiredLandmine(landmine){
-        const x_range = 8;
-        const z_range = 5;
-        landmine.position.set(Math.abs(Math.random() * x_range), 0, this.currentMinePosz + Math.abs(Math.random()*z_range));
-        landmine.visible = true;
     }
    
-    replaceLandmine(landmine){
-        landmine.position.set((Math.random()*2-1)*3,0,this.currentMinePosz); //지뢰 랜덥 뒤에 곱한 수치에 따라 너비 조정
-        this.landmineQueue.enqueue(landmine);
+    replaceMap(map){
+        map.position.set(0,0,this.currentMinePosz); //지뢰 랜덥 뒤에 곱한 수치에 따라 너비 조정
+        this.mapQueue.enqueue(map);
         this.currentMinePosz=this.currentMinePosz+1;
-        landmine.visible = true;
+        map.visible = true;
     }
-    
-    // landmine을 밟으면 구체를만들고 그 위에 텍스쳐를 입혀 폭발하는 것처럼 보여준다.
-    removeExplosion(explosion){    // explosion 객체를 reference 인자로 전달 받는다.
-        const index = this.explosions.indexOf(explosion);
-        if(index != -1) this.explosions.splice(index,1);
-        // 찾는 값이 이미 없는 경우가 아니면 explosions 배열에서 제거한다.
-
-    }
-
-
     update(){
 
         this.collisionObj = []
         this.isCollision = false;
-        this.landmineQueue._arr.forEach((landmine, ndx) => {
-            if(this.character.posz-landmine.position.z>2)
+        this.mapQueue._arr.forEach((map, ndx) => {
+            if(this.character.posz-map.position.z>2)
             {
-                this.replaceLandmine(this.landmineQueue.dequeue());
+                this.replaceMap(this.mapQueue.dequeue());
             }
-            const collisionResult=this.checkCollision(landmine,0.3,this.character.actor,0.3); //콜리전 체크하는 부분 0.3이 반지름
-            if(collisionResult)
-            {
-                this.colided.push(landmine);
-                this.isCollision = true;
-                this.explosions.push(new Explosion(landmine, this));
-                //목숨 깍이는 코드 작성했지만 맞고나면 무적처리 필요
-                //explosion 효과 필요
-                //사운드 필요
-                //움직임 제한
-            }
-            
         });
-
-
-        this.colided.forEach((landmine) => {
-            
-            landmine.visible = false;
-            this.recycleFiredLandmine(landmine);
-        })
-
-        this.colided.splice(0);
-
-     
-
-        if(this.isCollision){
-            this.life = this.life -1;
-            this.lifeChanged();
-        }
-
-
     }
 
 }
 
 
-export {Obstacles}
+export {Maps}
