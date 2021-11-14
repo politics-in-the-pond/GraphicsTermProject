@@ -25,6 +25,8 @@ class Obstacles {
     static obstaclePath = '../assets/'
     constructor(game){
         this.game = game;
+        this.BGM=this.game.BGM;
+        this.SFX=this.game.SFX;
         this.scene = game.scene;
         this.position = new THREE.Vector3(0,90 * Math.PI / 180,0);
         this.rotaion = new THREE.Vector3(0.1,0.1,0.1);
@@ -84,6 +86,10 @@ class Obstacles {
         overmenu.style.display="flex";
         menuBtn.style.display="none";
         this.game.pause=true;
+        this.BGM[0].pause();
+        this.BGM[0].currentTime=0;
+        this.BGM[1].play();
+        this.BGM[1].loop=true;
     }
     load() {
 
@@ -202,10 +208,7 @@ class Obstacles {
                 this.colided.push(landmine);
                 this.isCollision = true;
                 this.explosions.push(new Explosion(landmine.clone(), this));
-                //목숨 깍이는 코드 작성했지만 맞고나면 무적처리 필요
-                //explosion 효과 필요
-                //사운드 필요
-                //움직임 제한
+                this.SFX[1].play();
             }
             
         });

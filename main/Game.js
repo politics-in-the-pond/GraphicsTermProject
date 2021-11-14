@@ -15,7 +15,7 @@ var pressed_array = [false, false, false, false];
 
 class Game{
 
-	constructor(){
+	constructor(BGM,SFX){
 
         function whenKeyDown(pressed_array){
             var keyCode = event.which;
@@ -65,7 +65,11 @@ class Game{
 		document.body.appendChild( container );
 
       
+        this.BGM=BGM;
+        this.SFX=SFX;
         
+        this.BGM[0].loop=true;
+        this.BGM[0].play();
 		this.clock = new THREE.Clock();
         // loadingBar를 만듭니다.
         this.loadingBar = new LoadingBar();

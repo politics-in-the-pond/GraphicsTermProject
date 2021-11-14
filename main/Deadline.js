@@ -14,6 +14,8 @@ class Deadline{
         this.posy=0;
         this.posz=-3;
         this.game = game;
+        this.BGM=this.game.BGM;
+        this.SFX=this.game.SFX;
         const material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
         const points = [];
         points.push( new THREE.Vector3( - 3, 0, 0 ) );
@@ -59,6 +61,10 @@ class Deadline{
         menuBtn.style.display="none";
         this.reset();
         this.game.pause=true;
+        this.BGM[0].pause();
+        this.BGM[0].currentTime=0;
+        this.BGM[1].play();
+        this.BGM[1].loop=true;
     }
 
     reset(){

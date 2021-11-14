@@ -1,5 +1,12 @@
 import { Game } from './main/Game.js';
-
+var SFX = [
+  new Audio('/assets/button_click.wav'),
+  new Audio('/assets/bomb.wav'),
+];
+var BGM = [
+  new Audio('/assets/BGM_Ingame.mp3'),
+  new Audio('/assets/BGM_End.wav'),
+];
 
 window.onload=function init(){
   var button = [
@@ -22,32 +29,48 @@ window.onload=function init(){
     document.getElementById("TitleMenu"),
     document.getElementById("GameMenu"),
     document.getElementById("SettingMenu"),
-    document.getElementById("Creators")
+    document.getElementById("Creators"),
+    document.getElementById("GameOverMenu"),
   ];
   var Component =[
     document.getElementById("LifeArea"),
     document.getElementById("Distance"),
   ];
+  var Slider =[
+    document.getElementById("BGM"),
+    document.getElementById("SFX"),
+  ]
   var menuEnabled = false;
   var optionEnabled = false;
+   
+  
+  Slider[0].addEventListener("change", () => { //게임시작
+    BGM.forEach(bgm=>{
+      bgm.volume =  Slider[0].value/100;
+    });
+  });
 
-  var buttonSound = new Audio('/assets/button_click.wav');
+  Slider[1].addEventListener("change", () => { //게임시작
+    SFX.forEach(sfx=>{
+      sfx.volume =  Slider[1].value/100;
+    });
+  });
 
   button.forEach(btn =>{
     btn.addEventListener("click", () => { //게임시작
-      buttonSound.play();
+      
+      SFX[0].play();
     });
   });
 
 
   button[0].addEventListener("click", () => { //게임시작
-    const game = new Game(); 
+    const game = new Game(BGM,SFX); 
     window.game = game;
     Menu[0].style.display = "none";
     button[3].style.display = "block";
     Component[0].style.display = "flex";
     Component[1].style.display = "block";
-    
   });
   button[1].addEventListener("click", () => { //타이틀설정 버튼
     if(!optionEnabled)
@@ -113,10 +136,20 @@ window.onload=function init(){
     menuEnabled=false;
     document.getElementById("GameMenu").style.display="none";
     document.getElementById("GameMenuBtn").style.display="block";
+  
+    BGM[1].pause();
+    BGM[1].currentTime=0;
+    BGM[0].play();
+    BGM[0].loop=true;
+
 });
 button[11].addEventListener("click", () => { //재시작 버튼
     menuEnabled=false;
     document.getElementById("GameOverMenu").style.display="none";
     document.getElementById("GameMenuBtn").style.display="block";
+    BGM[1].pause();
+    BGM[1].currentTime=0;
+    BGM[0].play();
+    BGM[0].loop=true;
 });
 }
