@@ -130,7 +130,7 @@ class Character{
             this.posx = -this.restriction;
         }
         this.actor.position.set(this.posx, this.posy, this.posz);
-        document.getElementById("Distance").innerText = Math.floor(this.posz)*10+" M";
+        document.getElementById("Distance").innerText = Math.floor(this.posz)+" M";
     }
 
     getRotationFromKey(pressed_array){
