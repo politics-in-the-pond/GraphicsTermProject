@@ -9,7 +9,7 @@ class Camera{
     {
       
     }
-    reset()
+    reset(actorPos)
     {
         this.beforePositionx=0;
         this.beforePositionz=0;

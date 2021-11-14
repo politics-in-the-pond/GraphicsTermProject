@@ -7,6 +7,9 @@ import { LoadingBar } from '../libs/LoadingBar.js';
 import { Character } from '../Character.js';
 import { Obstacles } from './Obstacles.js';
 import { Camera } from '../Camera.js';
+import { Maps } from './Maps.js'
+import { Deadline } from './Deadline.js';
+
 var pressed_array = [false, false, false, false];
 
 
@@ -85,6 +88,8 @@ class Game{
 		
         this.character = new Character(this.loadCharacter());
         this.obstacles = new Obstacles(this);
+        this.maps = new Maps(this);
+        this.deadline = new Deadline(this);
         this.pause=false;
         
 
@@ -252,9 +257,11 @@ class Game{
             if(pressed_array !== undefined) this.character.move(pressed_array);
             this.character.addDeltaMovementy(0.01)
             var actorPosition = this.character.getActorPosition();
+            this.deadline.updatePosition(actorPosition);
             this.movableCam.setCameraPosition(actorPosition);
             if(this.character.mixer !== undefined) this.character.mixer.update(dt);
             this.renderer.render( this.scene, this.movableCam.getCamera() );
+            
         }
     }
 }

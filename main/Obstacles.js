@@ -78,7 +78,6 @@ class Obstacles {
         overmenu.style.display="flex";
         menuBtn.style.display="none";
         this.game.pause=true;
-
     }
     load() {
 
@@ -105,12 +104,10 @@ class Obstacles {
                     this.scene.add(newMine)
                     this.landmineWaitQueue.enqueue(newMine);
                 }
-                console.log(this.landmineWaitQueue._arr);
-               
                 while(this.landmineWaitQueue._arr.length>0)
                 {
                     this.landmineWaitQueue._arr[0].position.set((Math.random()*2-1)*3,0,this.currentMinePosz);
-                    console.log( this.landmineWaitQueue._arr[0].position);
+                    //console.log( this.landmineWaitQueue._arr[0].position);
                     this.landmineQueue.enqueue(this.landmineWaitQueue.dequeue());
                     this.currentMinePosz=this.currentMinePosz+1;
                 }
