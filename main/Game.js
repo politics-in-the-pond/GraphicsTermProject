@@ -126,12 +126,14 @@ class Game{
         document.getElementById("MenuRestartBtn").addEventListener("click", () => { //종료 버튼
             this.character.reset();
             this.obstacles.reset();
+            this.deadline.reset();
             this.movableCam.reset(this.character.actor.position); //카메라 리셋 기능 다시 구현 필요
             this.pause=false;
         });
         document.getElementById("OverRestartBtn").addEventListener("click", () => { //종료 버튼
             this.character.reset();
             this.obstacles.reset();
+            this.deadline.reset();
             this.movableCam.reset(this.character.actor.position);
             this.pause=false;
         });
