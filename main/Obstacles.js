@@ -28,6 +28,8 @@ class Obstacles {
         this.character = this.game.character;
         this.load();
         this.life=3; //라이프를 참조를 계속 못해서 여기로 옮김
+        this.colided = [];
+        this.explosions = [];
         //this.explosion = new Explosion(); //explosion 경로 혹은 참조 오류?
     }
 
@@ -146,30 +148,54 @@ class Obstacles {
             this.replaceLandmine(this.landmineQueue.dequeue());
         }
     }
+
+    recycleFiredLandmine(landmine){
+        const x_range = 8;
+        const z_range = 5;
+        landmine.position.set(Math.abs(Math.random() * x_range), 0, this.currentMinePosz + Math.abs(Math.random()*z_range));
+        landmine.visible = true;
+    }
    
     replaceLandmine(landmine){
         landmine.position.set((Math.random()*2-1)*3,0,this.currentMinePosz); //지뢰 랜덥 뒤에 곱한 수치에 따라 너비 조정
         this.landmineQueue.enqueue(landmine);
         this.currentMinePosz=this.currentMinePosz+1;
+        landmine.visible = true;
     }
     update(){
+
+        this.collisionObj = []
+        this.isCollision = false;
         this.landmineQueue._arr.forEach((landmine, ndx) => {
             if(this.character.posz-landmine.position.z>2)
             {
                 this.replaceLandmine(this.landmineQueue.dequeue());
             }
-            var collisionResult=this.checkCollision(landmine,0.3,this.character.actor,0.3); //콜리전 체크하는 부분 0.3이 반지름
+            const collisionResult=this.checkCollision(landmine,0.3,this.character.actor,0.3); //콜리전 체크하는 부분 0.3이 반지름
             if(collisionResult)
             {
-                console.log(collisionResult);
-                this.life=this.life-1;
-                this.lifeChanged();//목숨 깍이는 코드 작성했지만 맞고나면 무적처리 필요
+                this.colided.push(landmine);
+                this.isCollision = true;
+                //목숨 깍이는 코드 작성했지만 맞고나면 무적처리 필요
                 //explosion 효과 필요
                 //사운드 필요
                 //움직임 제한
             }
             
         });
+
+
+        this.colided.forEach((landmine) => {
+            landmine.visible = false;
+            this.recycleFiredLandmine(landmine);
+        })
+
+        this.colided.splice(0);
+
+        if(this.isCollision){
+            this.life = this.life -1;
+            this.lifeChanged();
+        }
 
     }
 
