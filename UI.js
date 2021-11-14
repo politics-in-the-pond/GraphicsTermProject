@@ -112,6 +112,19 @@ window.onload=function init(){
   button[7].addEventListener("click", () => { //종료 버튼
     window.open(location, '_self').close();
   });
+  button[8].addEventListener("click", () => { //종료 버튼
+    Slider.forEach(slider =>{
+      slider.value=50;
+    });
+      BGM.forEach(bgm=>{
+        bgm.volume =  Slider[0].value/100;
+      });
+  
+      SFX.forEach(sfx=>{
+        sfx.volume =  Slider[1].value/100;
+      });
+   
+  });
   button[9].addEventListener("click", () => { //종료 버튼
     if(menuEnabled)
     {
