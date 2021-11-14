@@ -28,6 +28,7 @@ class Obstacles {
         this.character = this.game.character;
         this.load();
         this.life=3; //라이프를 참조를 계속 못해서 여기로 옮김
+        this.mineNumber=100;
         this.colided = [];
         this.explosions = [];
         //this.explosion = new Explosion(); //explosion 경로 혹은 참조 오류?
@@ -99,7 +100,7 @@ class Obstacles {
                 this.landmine.visible = true;
                 
 
-                for (let index = 0; index < 100; index++) {
+                for (let index = 0; index < this.mineNumber; index++) {
                     var newMine=this.landmine.clone();
                     this.scene.add(newMine)
                     this.landmineWaitQueue.enqueue(newMine);
@@ -141,7 +142,7 @@ class Obstacles {
         this.currentMinePosz=1;
         this.life=3;
         this.lifeChanged();
-        for (let index = 1; index < 10; index++) {
+        for (let index = 1; index < this.mineNumber; index++) {
             this.replaceLandmine(this.landmineQueue.dequeue());
         }
 
