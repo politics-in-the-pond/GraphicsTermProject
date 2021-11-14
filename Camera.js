@@ -13,6 +13,8 @@ class Camera{
     {
         this.beforePositionx=0;
         this.beforePositionz=0;
+        this.camera.position.x = 0;
+        this.camera.position.z = 0;
         this.camera.position.y = 2;
         this.camera.rotation.x = 30 * Math.PI / 180;
         this.camera.rotation.y = 180 * Math.PI / 180;
