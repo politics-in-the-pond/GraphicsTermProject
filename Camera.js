@@ -9,12 +9,11 @@ class Camera{
     {
       
     }
-    reset()
+    reset(actorPos)
     {
       this.camera.position.y = 2;
-      this.camera.rotation.x = 30 * Math.PI / 180;
-      this.camera.rotation.y = 180 * Math.PI / 180;
-      this.camera.rotation.z = 0 * Math.PI / 180;
+      this.beforePositionx = actorPos.x;
+      this.beforePositionz = actorPos.z;
     }
     setCamera(camera)
     {

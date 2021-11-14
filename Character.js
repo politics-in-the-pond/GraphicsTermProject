@@ -21,6 +21,7 @@ class Character{
         this.posy = 0;
         this.posz = 0;
     }
+    
 	AnimationUpdate(index){
 		const keys = Object.keys(this.animations);
         this.action = keys[index];
