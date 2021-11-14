@@ -146,6 +146,10 @@ class Obstacles {
         for (let index = 1; index < 10; index++) {
             this.replaceLandmine(this.landmineQueue.dequeue());
         }
+
+        while(this.explosions.length >0){
+            this.explosions[0].onComplete();
+        }
     }
 
     recycleFiredLandmine(landmine){
@@ -161,6 +165,16 @@ class Obstacles {
         this.currentMinePosz=this.currentMinePosz+1;
         landmine.visible = true;
     }
+    
+    // landmine을 밟으면 구체를만들고 그 위에 텍스쳐를 입혀 폭발하는 것처럼 보여준다.
+    removeExplosion(explosion){    // explosion 객체를 reference 인자로 전달 받는다.
+        const index = this.explosions.indexOf(explosion);
+        if(index != -1) this.explosions.splice(index,1);
+        // 찾는 값이 이미 없는 경우가 아니면 explosions 배열에서 제거한다.
+
+    }
+
+
     update(){
 
         this.collisionObj = []
@@ -175,6 +189,7 @@ class Obstacles {
             {
                 this.colided.push(landmine);
                 this.isCollision = true;
+                this.explosions.push(new Explosion(landmine, this));
                 //목숨 깍이는 코드 작성했지만 맞고나면 무적처리 필요
                 //explosion 효과 필요
                 //사운드 필요
@@ -185,16 +200,20 @@ class Obstacles {
 
 
         this.colided.forEach((landmine) => {
+            
             landmine.visible = false;
             this.recycleFiredLandmine(landmine);
         })
 
         this.colided.splice(0);
 
+     
+
         if(this.isCollision){
             this.life = this.life -1;
             this.lifeChanged();
         }
+
 
     }
 
