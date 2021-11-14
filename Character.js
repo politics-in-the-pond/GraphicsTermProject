@@ -14,7 +14,13 @@ class Character{
         this.posy = 0;
         this.posz = 0;
     }
-    
+    reset()
+    {
+        this.deltaMovement = 0.01;
+        this.posx = 0;
+        this.posy = 0;
+        this.posz = 0;
+    }
 	AnimationUpdate(index){
 		const keys = Object.keys(this.animations);
         this.action = keys[index];

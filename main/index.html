@@ -87,6 +87,25 @@
         -ms-flex-pack: center; 
         justify-content: center; /* 수평 정렬 */
     }
+    #GameOverMenu{  
+        width: 100%; 
+        height: 100vh; 
+        position:absolute;
+        display: -webkit-box; 
+        display: -moz-box;
+        display: -ms-flexbox; 
+        display: flex; 
+        display: none;
+        -webkit-box-align: center; 
+        -moz-box-align: center;
+        -ms-flex-align: center;
+        align-items: center; /* 수직 정렬 */
+        text-align: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center; 
+        -ms-flex-pack: center; 
+        justify-content: center; /* 수평 정렬 */
+    }
     .MenuChild{
         flex:4;
     }
@@ -293,6 +312,17 @@
                     <button type="button" class="Button" id="CreatorsBackBtn" > 뒤로가기 </button>
                 </div>
                
+            </div>
+            <div class="MenuChild"></div>
+        </div>
+        <div style="position:absolute;width:30%;height:100vh;"></div>
+        <div style="position:absolute;width:30%;height:100vh;"></div>
+        <div id="GameOverMenu">
+            <div class="MenuChild"></div>
+            <div class="MenuChild" id="MenuBox">
+                <div id="CreatorsTitle">게임 오버</div>
+                <button type="button" id="OverRestartBtn" class="MenuBtn Button"> 다시하기 </button>
+                <button type="button" id="OverQuitBtn" class="MenuBtn Button"> 종료하기 </button>
             </div>
             <div class="MenuChild"></div>
         </div>

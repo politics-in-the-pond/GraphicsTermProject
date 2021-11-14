@@ -85,7 +85,7 @@ class Game{
 		
         this.character = new Character(this.loadCharacter());
         this.obstacles = new Obstacles(this);
-        
+        this.pause=false;
         
 
         // antialiasing을 활성화합니다.
@@ -104,14 +104,43 @@ class Game{
          
 
 		
-		//window.addEventListener('resize', this.resize.bind(this) );
+	    window.addEventListener('resize', this.resize.bind(this) );
 
         document.addEventListener("keydown", onDocumentKeyDown, false);
         function onDocumentKeyDown(event) {pressed_array = whenKeyDown(pressed_array);};
 
         document.addEventListener("keyup", onDocumentKeyUp, false);
         function onDocumentKeyUp(event) {pressed_array = whenKeyUp(pressed_array);};
+
+        document.getElementById("GameMenuBtn").addEventListener("click", () => { //종료 버튼
+            this.pause=true;
+        });
+        document.getElementById("MenuResumeBtn").addEventListener("click", () => { //종료 버튼
+            this.pause=false;
+        });
+        document.getElementById("MenuRestartBtn").addEventListener("click", () => { //종료 버튼
+            this.character.reset();
+            this.obstacles.reset();
+            this.movableCam.reset(this.character.actor.position); //카메라 리셋 기능 다시 구현 필요
+            this.pause=false;
+        });
+        document.getElementById("OverRestartBtn").addEventListener("click", () => { //종료 버튼
+            this.character.reset();
+            this.obstacles.reset();
+            this.movableCam.reset(this.character.actor.position);
+            this.pause=false;
+        });
 	}
+
+    pause()
+    {
+        this.pause=true;
+    }
+    resume()
+    {
+        this.pause=false;
+    }
+
     loadCharacter(){
         const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
          const dracoLoader = new DRACOLoader();
@@ -175,8 +204,7 @@ class Game{
     }
 
 
-
-
+    
 
     loadCharacter(){
     	const loader = new GLTFLoader().setPath(`${this.assetsPath}factory/`);
@@ -215,14 +243,19 @@ class Game{
     
 
 	render() {
+
 		const dt = this.clock.getDelta();   // get elapsed time
-        this.character.update(pressed_array); 
-        if(pressed_array !== undefined) this.character.move(pressed_array);
-        this.character.addDeltaMovementy(0.005)
-        var actorPosition = this.character.getActorPosition();
-        this.movableCam.setCameraPosition(actorPosition);
-        if(this.character.mixer !== undefined) this.character.mixer.update(dt);
-        this.renderer.render( this.scene, this.movableCam.getCamera() );
+        if(!this.pause)
+        {
+            this.character.update(pressed_array); 
+            this.obstacles.update();
+            if(pressed_array !== undefined) this.character.move(pressed_array);
+            this.character.addDeltaMovementy(0.005)
+            var actorPosition = this.character.getActorPosition();
+            this.movableCam.setCameraPosition(actorPosition);
+            if(this.character.mixer !== undefined) this.character.mixer.update(dt);
+            this.renderer.render( this.scene, this.movableCam.getCamera() );
+        }
     }
 }
 
