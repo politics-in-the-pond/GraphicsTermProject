@@ -250,7 +250,7 @@ class Game{
             this.character.update(pressed_array); 
             this.obstacles.update();
             if(pressed_array !== undefined) this.character.move(pressed_array);
-            this.character.addDeltaMovementy(0.005)
+            this.character.addDeltaMovementy(0.01)
             var actorPosition = this.character.getActorPosition();
             this.movableCam.setCameraPosition(actorPosition);
             if(this.character.mixer !== undefined) this.character.mixer.update(dt);

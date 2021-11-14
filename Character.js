@@ -9,7 +9,7 @@ class Character{
     deltaMovement;
 
     constructor(){
-        this.deltaMovement = 0.01;
+        this.deltaMovement = 0.02;
         this.posx = 0;
         this.posy = 0;
         this.posz = 0;
