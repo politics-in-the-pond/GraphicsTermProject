@@ -176,10 +176,11 @@ class Obstacles {
     }
 
 
-    update(){
+    update(time){
 
         this.collisionObj = []
         this.isCollision = false;
+    
         this.landmineQueue._arr.forEach((landmine, ndx) => {
             if(this.character.posz-landmine.position.z>2)
             {
@@ -199,7 +200,15 @@ class Obstacles {
             
         });
 
+        this.explosions.forEach(explosion => {
+            explosion.update(time);
+        })
 
+        if(this.isCollision){
+            this.life = this.life -1;
+            this.lifeChanged();
+        }
+ 
         this.colided.forEach((landmine) => {
             
             landmine.visible = false;
@@ -207,13 +216,6 @@ class Obstacles {
         })
 
         this.colided.splice(0);
-
-     
-
-        if(this.isCollision){
-            this.life = this.life -1;
-            this.lifeChanged();
-        }
 
 
     }

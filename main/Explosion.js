@@ -87,6 +87,7 @@ void main() {
     parent.add( this.ball );
 
     this.tweens = [];
+    // x 축으로 0.2에서 1.5로 늘린다.
     this.tweens.push( new Tween(this.ball.scale, 'x', 0.2, 1.5, this.onComplete.bind(this), 'outQuad') );
 
     this.active = true;
