@@ -255,7 +255,7 @@ class Game{
             this.character.update(pressed_array); 
             this.obstacles.update(dt);
             if(pressed_array !== undefined) this.character.move(pressed_array);
-            this.character.addDeltaMovementy(0.01)
+            this.character.addDeltaMovementy(0)
             var actorPosition = this.character.getActorPosition();
             this.deadline.updatePosition(actorPosition);
             this.movableCam.setCameraPosition(actorPosition);
