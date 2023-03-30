@@ -6,10 +6,18 @@ class Character{
     posx;
     posy;
     posz;
+    restriction=3;
     deltaMovement;
 
     constructor(){
-        this.deltaMovement = 0.01;
+        this.deltaMovement = 0.02;
+        this.posx = 0;
+        this.posy = 0;
+        this.posz = 0;
+    }
+    reset()
+    {
+        this.deltaMovement = 0.02;
         this.posx = 0;
         this.posy = 0;
         this.posz = 0;
@@ -26,7 +34,7 @@ class Character{
 
         if(clip!==undefined){
             const action = this.mixer.clipAction(clip);
-
+            
             action.reset();
             
             if(name == 'shot'){
@@ -39,9 +47,7 @@ class Character{
             if(this.curAction){
                 this.curAction.crossFadeTo(action, 0.5);
             }
-
             this.curAction = action;
-
         }
 	}
 
@@ -58,25 +64,25 @@ class Character{
         console.log(this.animations);
 
         this.actionName = '';   // since we have no animatinos at the moment we initialize this to an empty string
-
+        this.setRotationY(0);
     }
 
     calcPosition(pressed_array){
         //console.log(pressed_array)
         if(pressed_array[0]){
-            this.posy += this.deltaMovement;
+            this.posz += this.deltaMovement;
         }
       
         if(pressed_array[1]){
-            this.posy -= this.deltaMovement;
+            this.posz -= this.deltaMovement;
         }
       
         if(pressed_array[2]){
-            this.posx -= this.deltaMovement;
+            this.posx += this.deltaMovement;
         }
       
         if(pressed_array[3]){
-            this.posx += this.deltaMovement;
+            this.posx -= this.deltaMovement;
         }
       }
       update(pressed_array){
@@ -118,32 +124,37 @@ class Character{
         if(angle!= -1){
             this.setRotationY(angle);
         }
-        this.actor.position.set(this.posx, this.posz, this.posy);
-        //console.log(pressed_array[0])
+        if(this.posx > this.restriction){
+            this.posx = this.restriction;
+        }else if(this.posx < -this.restriction){
+            this.posx = -this.restriction;
+        }
+        this.actor.position.set(this.posx, this.posy, this.posz);
+        document.getElementById("Distance").innerText = Math.floor(this.posz)+" M";
     }
 
     getRotationFromKey(pressed_array){
-        var angle = 180;
+        var angle = 0;
         if(pressed_array[0] == true){
-            angle = 180;
-        } else if(pressed_array[1] == true){
             angle = 0;
+        } else if(pressed_array[1] == true){
+            angle = 180;
         } else if(pressed_array[2] == true){
-            angle = 270;
-        } else if(pressed_array[3] == true){
             angle = 90;
+        } else if(pressed_array[3] == true){
+            angle = 270;
         }else{
             angle = -1;
         }
 
         if(pressed_array[0] == true && pressed_array[1] == false && pressed_array[2] == true && pressed_array[3] == false){
-            angle = 225;
-        } else if(pressed_array[0] == true && pressed_array[1] == false && pressed_array[2] == false && pressed_array[3] == true){
-            angle = 135;
-        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == true && pressed_array[3] == false){
-            angle = 315;
-        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == false && pressed_array[3] == true){
             angle = 45;
+        } else if(pressed_array[0] == true && pressed_array[1] == false && pressed_array[2] == false && pressed_array[3] == true){
+            angle = 315;
+        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == true && pressed_array[3] == false){
+            angle = 135;
+        } else if(pressed_array[0] == false && pressed_array[1] == true && pressed_array[2] == false && pressed_array[3] == true){
+            angle = 225;
         } else{
 
         }
@@ -155,12 +166,16 @@ class Character{
         this.actor.rotation.set(0, y * Math.PI / 180, 0);
     }
 
+    addDeltaMovementy(delta){
+        this.posz += delta;
+    }
+
     setDeltaMovement(delta){
         this.deltaMovement = delta;
     }
 
     getActorPosition(){
-        var position = [this.posx, this.posy, this.posz];
+        var position = [this.posx, this.posy+1, this.posz];
         return position;
     }
 }

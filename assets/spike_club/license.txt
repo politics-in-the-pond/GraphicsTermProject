@@ -1,0 +1,11 @@
+Model Information:
+* title:	Spike Club
+* source:	https://sketchfab.com/3d-models/spike-club-5b6df0e596e14dd988828820378e732d
+* author:	chrizp (https://sketchfab.com/chrizp)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Spike Club" (https://sketchfab.com/3d-models/spike-club-5b6df0e596e14dd988828820378e732d) by chrizp (https://sketchfab.com/chrizp) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
