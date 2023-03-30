@@ -13,4 +13,3 @@ Three.JS의 애니메이션 재생 기능을 통해 대기 모션과 걷는 모�
 
 ## Demo
 https://www.youtube.com/watch?v=XxnFWIj3DwM
-![image](https://user-images.githubusercontent.com/74289147/228913527-04efd33d-90aa-46d7-9538-1f89dcd2e52c.png)
